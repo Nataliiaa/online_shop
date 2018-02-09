@@ -7,8 +7,8 @@ import static junit.framework.Assert.assertEquals;
 public class ArrayListTest {
     @Test
     public void verifyAddElementToArrayList() {
-        ArrayList list = new ArrayList();
-        int argValue = 3;
+        ArrayList<Integer> list = new ArrayList<>();
+        Integer argValue = 3;
         list.add(argValue);
         int arrayIndex = 0;
         assertEquals(argValue, list.get(arrayIndex));
@@ -16,7 +16,7 @@ public class ArrayListTest {
 
     @Test
     public void verifyArrayListSize() {
-        ArrayList list = new ArrayList();
+        ArrayList<Integer> list = new ArrayList<>();
 
         int argValue1 = 4;
         list.add(argValue1);
@@ -29,7 +29,7 @@ public class ArrayListTest {
 
     @Test
     public void verifyArrayListResize() {
-        ArrayList list = new ArrayList();
+        ArrayList<Integer> list = new ArrayList<>();
         int num = 15;
 
         for (int i = 0; i < num; i++) {
@@ -42,7 +42,12 @@ public class ArrayListTest {
 
     @Test
     public void verifyArrayListRemoveLast() {
-        ArrayList list = new ArrayList();
-        int
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.removeLast();
+        int expectedResult = 2;
+        assertEquals(expectedResult, list.size());
     }
 }
