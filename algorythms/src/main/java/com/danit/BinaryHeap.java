@@ -2,13 +2,14 @@ package com.danit;
 
 import java.util.Comparator;
 
-public class BinaryHeap {
+public class BinaryHeap<T> {
 
-    private int[] array = new int[10];
+    private T[] array;
     private int size = 0;
-    private Comparator<Integer> comparator;
+    private Comparator<T> comparator;
 
-    public BinaryHeap(Comparator<Integer> comparator) {
+    public BinaryHeap(Comparator<T> comparator) {
+        array = (T[]) new Object [10];
         this.comparator = comparator;
     }
 
@@ -16,13 +17,13 @@ public class BinaryHeap {
         return size;
     }
 
-    public void add(int number) {
+    public void add(T number) {
         array[++size] = number;
         swim(size);
     }
 
-    public int remove() {
-        int firstElement = array[1];
+    public T remove() {
+        T firstElement = array[1];
         array[1] = array[size--];
         down(1);
         return firstElement;
@@ -36,7 +37,7 @@ public class BinaryHeap {
     }
 
     private void swap(int i, int j) {
-        int temp = array[i];
+        T temp = array[i];
         array[i] = array[j];
         array[j] = temp;
     }
