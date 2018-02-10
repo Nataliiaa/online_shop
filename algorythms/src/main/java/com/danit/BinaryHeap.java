@@ -1,9 +1,16 @@
 package com.danit;
 
+import java.util.Comparator;
+
 public class BinaryHeap {
 
     private int[] array = new int[10];
     private int size = 0;
+    private Comparator<Integer> comparator;
+
+    public BinaryHeap(Comparator<Integer> comparator) {
+        this.comparator = comparator;
+    }
 
     public int size() {
         return size;
@@ -22,7 +29,7 @@ public class BinaryHeap {
     }
 
     private void swim(int index) {
-        while (array[index / 2] < array[index] && index > 1) {
+        while (comparator.compare(array[index / 2], array[index]) < 0 && index > 1) {
             swap(index, index / 2);
             index = index / 2;
         }
@@ -38,10 +45,10 @@ public class BinaryHeap {
         int child = index * 2;
         while (index * 2 < size) {
             child = index*2;
-            if (child + 1 <= size && array[child] < array[child + 1]) {
+            if (child + 1 <= size && comparator.compare(array[child], array[child + 1]) < 0) {
                 child++;
             }
-            if (array[child] > array[index]) {
+            if (comparator.compare(array[child], array[index]) > 0) {
                 swap(child, index);
                 index =child;
             }

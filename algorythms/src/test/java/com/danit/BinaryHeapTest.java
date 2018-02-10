@@ -10,7 +10,7 @@ public class BinaryHeapTest {
     @Test
     public void test1BinaryHeap() {
         Comparator<Integer> comparator = new IntegerMaxComparator();
-        BinaryHeap heap = new BinaryHeap(comparator);
+        com.danit.BinaryHeap heap = new BinaryHeap(comparator);
         heap.add(4);
         heap.add(8);
         heap.add(3);
@@ -22,7 +22,7 @@ public class BinaryHeapTest {
     @Test
     public void testBinaryHeapRemove() {
         Comparator<Integer> comparator = new IntegerMaxComparator();
-        BinaryHeap heap = new BinaryHeap(comparator);
+        com.danit.BinaryHeap heap = new BinaryHeap(comparator);
         heap.add(4);
         heap.add(2);
         heap.add(3);
@@ -36,7 +36,7 @@ public class BinaryHeapTest {
 
     @Test
     public void testCompareMin(){
-        Comparator<Integer> comparator = new IntegerMinComparator();
+        Comparator<Integer> comparator = new IntegereMinComparator();
         BinaryHeap heap = new BinaryHeap(comparator);
         heap.add(4);
         heap.add(2);
