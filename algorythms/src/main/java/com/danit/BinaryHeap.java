@@ -30,7 +30,7 @@ public class BinaryHeap<T> {
     }
 
     private void swim(int index) {
-        while (comparator.compare(array[index / 2], array[index]) < 0 && index > 1) {
+        while (index > 1 && comparator.compare(array[index / 2], array[index]) < 0) {
             swap(index, index / 2);
             index = index / 2;
         }
