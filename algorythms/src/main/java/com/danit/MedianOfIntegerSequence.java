@@ -6,7 +6,9 @@ import java.util.Scanner;
 public class MedianOfIntegerSequence {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        PriorityQueue<Integer> queueMin = new PriorityQueue<Integer>((o1, o2) -> o2 - o1);
+        PriorityQueue<Integer> queueMin = new PriorityQueue<Integer>((Integer o1, Integer o2) -> {
+            return o2 - o1;
+        });
         PriorityQueue<Integer> queueMax = new PriorityQueue<Integer>();
 
         while (in.hasNext()) {
