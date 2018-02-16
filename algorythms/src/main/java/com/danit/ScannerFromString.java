@@ -4,18 +4,18 @@ import java.util.stream.Stream;
 
 public class ScannerFromString {
     private final String[] items;
-    private int i=0;
+    private int currPos =0;
 
     public ScannerFromString(String origin) {
         this.items = origin.split(" ");
     }
 
     public boolean hasNext() {
-        return i<this.items.length;
+        return currPos <this.items.length;
     }
 
     public String next() {
-        return this.items[i++];
+        return this.items[currPos++];
     }
 
     public Stream<String> stream() {

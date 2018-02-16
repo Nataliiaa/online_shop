@@ -17,16 +17,16 @@ public class ScannerFromStringTest {
 
     @Test
     public void testScannerFromStringGoodDesign() {
-        ScannerFromString s = new ScannerFromString("a b c d e");
+        ScannerFromString in = new ScannerFromString("a b c d e");
         StringBuilder sb = new StringBuilder();
 
-        while (s.hasNext()) {
-            sb.append(s.hasNext())
+        while (in.hasNext()) {
+            sb.append(in.hasNext())
                 .append(":")
-                .append(s.next())
+                .append(in.next())
                 .append("\n");
         }
-        sb.append(s.hasNext())
+        sb.append(in.hasNext())
             .append("\n");
 
         assertEquals(

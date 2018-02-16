@@ -8,9 +8,9 @@ public class Dictionary {
 
     public String methodOne(String origin) {
         // we are using ScannerFromString for tests within IDEA
-        //ScannerFromString in = new ScannerFromString(origin);
+        ScannerFromString in = new ScannerFromString(origin);
         // we are using Scanner for tests on codegym.in.ua
-        Scanner in = new Scanner(System.in);
+        //Scanner in = new Scanner(System.in);
 
         TreeMap<String, Integer> dict = new TreeMap<>();
 
