@@ -1,17 +1,40 @@
 package com.danit;
 
 public class DisjointSet {
+  private final int airportCount;
+  private int[] flights;
 
-  void add(int a1, int a2) {
+  public DisjointSet(int airportCount) {
+    this.airportCount = airportCount;
+    flights = new int[airportCount];
+
+    for (int i = 0; i < airportCount; i++) {
+      flights[i] = i;
+    }
 
   }
 
-  void cancel(int a1, int a2) {
-
+  void add(int from, int to) {
+    flights[from] = to;
   }
 
-  boolean check(int a1, int a2) {
-    return false;
+  void cancel(int from, int to) {
+    flights[from] = from;
+  }
+
+  boolean check(int from, int to) {
+    while(true) {
+      if (from == to) {
+        return true;
+      }
+      from = flights[from];
+      if(flights[from] == from) {
+        if(from == to)
+          return true;
+        else
+          return false;
+      }
+    }
   }
 
 }
