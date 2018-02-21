@@ -88,4 +88,20 @@ public class LRUCache<K, V> {
         }
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("(tail):");
+        Node<K, V> node = least;
+        while (node != null) {
+            sb.append(node.value).append(":");
+            node = node.next;
+        }
+        sb.append("(head)");
+        return sb.toString();
+    }
+
+    public void printMe() {
+        System.out.println(toString());
+    }
+
 }
