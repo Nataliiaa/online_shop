@@ -40,12 +40,12 @@ public class DijkstraAlgorithmBase {
     }
 
     public void relax(PriorityQueue<Integer> pq, int[] distTo){
-        int currCity = pq.poll();
+        int currCityId = pq.poll();
 
-        for(int cityId : neighbours(currCity)) {
-            if (distTo[cityId] > distTo[currCity] + distances[currCity][cityId]) {
+        for(int cityId : neighbours(currCityId)) {
+            if (distTo[cityId] > distTo[currCityId] + distances[currCityId][cityId]) {
                 pq.remove(cityId);
-                distTo[cityId] =  distTo[currCity] + distances[currCity][cityId];
+                distTo[cityId] =  distTo[currCityId] + distances[currCityId][cityId];
                 pq.add(cityId);
             }
         }
