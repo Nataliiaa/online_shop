@@ -7,7 +7,7 @@ public class ScannerFromString {
     private int currPos =0;
 
     public ScannerFromString(String origin) {
-        this.items = origin.split(" ");
+        this.items = origin.split("\\s+");
     }
 
     public boolean hasNext() {
