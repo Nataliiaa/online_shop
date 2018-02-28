@@ -2,12 +2,12 @@ package com.danit;
 
 import java.util.Iterator;
 
-public class ArrayList<T> implements Iterable<T> {
+public class ArrayListDan<T> implements Iterable<T> {
     private Object[] values;
     private int capacity = 10;
     private int size = 0;
 
-    public ArrayList() {
+    public ArrayListDan() {
         this.values = new Object[capacity];
     }
 
