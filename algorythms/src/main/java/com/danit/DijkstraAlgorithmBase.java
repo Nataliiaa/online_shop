@@ -1,6 +1,6 @@
 package com.danit;
 
-import java.util.PriorityQueue;
+import java.util.*;
 
 /*
 main idea given there
@@ -29,20 +29,63 @@ public class DijkstraAlgorithmBase {
     }
 
     Iterable<Integer> neighbours(int city){
-        ArrayList<Integer> list = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        for(int i = 0; i < citiesQty; i++){
+            if(distances[city][i] != -1) {
+                list.add(i);
+            }
+        }
         return list;
     }
 
-    public void relax(PriorityQueue<Integer> pq, int[] distTo){
+    public void relax(PriorityQueue<Integer> pq, int[] distTo, int[] fromCity) {
+        int currCityId = pq.poll();
+
+        for (int city : neighbours(currCityId)) {
+            if (distTo[currCityId] + distances[city][currCityId] < distTo[city]) {
+                distTo[city] = distTo[currCityId] + distances[city][currCityId];
+                fromCity[city] = currCityId;
+            }
+        }
     }
 
-    public int solution(int from, int to) {
-        int distTo[] = new int[citiesQty]; // empty array
+    public int solution_distance(int from, int to) {
+        int[] fromCity = new int[citiesQty];
+        int distTo[] = new int[citiesQty];
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.comparingInt(city -> distTo[city]));
 
-        System.out.println("not implemented yet");
+        for(int i = 0; i < citiesQty; i++){
+            distTo[i] = (i == from) ? 0 : INF;
+            pq.add(i);
+        }
+
+        while(!pq.isEmpty()){
+            relax(pq, distTo, fromCity);
+        }
         return distTo[to];
     }
 
+    public Stack<Integer> solution_path(int from, int to) {
+        int[] fromCity = new int[citiesQty];
+        int distTo[] = new int[citiesQty];
 
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.comparingInt(city -> distTo[city]));
+
+        for(int i = 0; i < citiesQty; i++){
+            distTo[i] = (i == from) ? 0 : INF;
+            pq.add(i);
+        }
+
+        while(!pq.isEmpty()){
+            relax(pq, distTo, fromCity);
+        }
+
+        Stack<Integer> path = new Stack<>();
+        path.push(to);
+        while (path.peek() != from) {
+            path.push(fromCity[path.peek()]);
+        }
+        return path;
+    }
 
 }
