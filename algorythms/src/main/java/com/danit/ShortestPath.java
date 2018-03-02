@@ -107,6 +107,7 @@ public class ShortestPath {
         for (int i = 0; i < distTo.length; i++) {
             distTo[i] = (distTo[i] == INF) ? -1 : distTo[i];
         }
+        // FIXME
 
         return distTo[to];
     }
