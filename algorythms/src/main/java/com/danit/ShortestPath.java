@@ -51,6 +51,16 @@ public class ShortestPath {
         return graph;
     }
 
+    public static WeightedGraph readGraph(ScannerFromString in){
+        int V = in.nextInt();
+        int E = in.nextInt();
+        WeightedGraph graph = new WeightedGraph(V);
+        for(int i = 0; i < E; i++){
+            graph.add(in.nextInt(), in.nextInt(), in.nextInt());
+        }
+        return graph;
+    }
+
     final static int INF = Integer.MAX_VALUE;
 
     public static void main(String[] args) {
@@ -60,9 +70,10 @@ public class ShortestPath {
         int N = in.nextInt();
         int citiesQty = graph.V();
         int[][] tests = new int[N][2];
+
         for(int i = 0; i < N; i++){
-            tests[i][0]=in.nextInt();
-            tests[i][1]=in.nextInt();
+            tests[i][0] = in.nextInt();
+            tests[i][1] = in.nextInt();
         }
 
         for (int i = 0; i < N; i++) {
@@ -70,23 +81,26 @@ public class ShortestPath {
             int u = tests[i][1];
             System.out.println(solution_distance(graph, v, u, citiesQty));
         }
-
-
     }
 
     public static void relax(WeightedGraph graph, PriorityQueue<Integer> pq, int[] distTo, int[] fromCity) {
         int currCityId = pq.poll();
+        System.out.println("======================================================");
+        System.out.printf("distTo = %s%n", Arrays.toString(distTo));
+        System.out.printf("City = %d%n", currCityId);
 
         for (int city : graph.adj(currCityId)) {
-            if (distTo[currCityId] < INF) {
-                int newDistance = distTo[currCityId] + graph.weight(city, currCityId);
+            System.out.printf("BEFORE distTo[%d] = %d, graph.weight(%d, %d) = %d%n",
+                    currCityId, distTo[currCityId], city, currCityId, graph.weight(city, currCityId));
 
-                if (newDistance < distTo[city]) {
-                    distTo[city] = newDistance;
-                    // path
-                    fromCity[city] = currCityId;
-                }
+            if (distTo[currCityId] < distTo[city] - graph.weight(city, currCityId)) {
+                distTo[city] = distTo[currCityId] + graph.weight(city, currCityId);
+                // path
+                fromCity[city] = currCityId;
             }
+
+            System.out.printf("AFTER  distTo[%d] = %d, fromCity[%d] = %d%n",
+                    city, distTo[city], city, fromCity[city]);
         }
     }
 
@@ -104,11 +118,8 @@ public class ShortestPath {
             relax(graph, pq, distTo, fromCity);
         }
 
-        for (int i = 0; i < distTo.length; i++) {
-            distTo[i] = (distTo[i] == INF) ? -1 : distTo[i];
-        }
         // FIXME
 
-        return distTo[to];
+        return (distTo[to] == INF) ? -1 : distTo[to];
     }
 }
