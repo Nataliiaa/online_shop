@@ -83,15 +83,15 @@ public class ShortestPath {
         }
     }
 
-    public static void relax(WeightedGraph graph, PriorityQueue<Integer> pq, int[] distTo, int[] fromCity) {
+    public static void relax(WeightedGraph graph, Queue<Integer> pq, int[] distTo, int[] fromCity) {
         int currCityId = pq.poll();
         System.out.println("======================================================");
         System.out.printf("distTo = %s%n", Arrays.toString(distTo));
         System.out.printf("City = %d%n", currCityId);
 
         for (int city : graph.adj(currCityId)) {
-            System.out.printf("BEFORE distTo[%d] = %d, graph.weight(%d, %d) = %d%n",
-                    currCityId, distTo[currCityId], city, currCityId, graph.weight(city, currCityId));
+            System.out.printf("BEFORE distTo[%d] = %d (cur), distTo[%d] = %d (city), graph.weight(%d, %d) = %d%n",
+                    currCityId, distTo[currCityId], city, distTo[city], city, currCityId, graph.weight(city, currCityId));
 
             if (distTo[currCityId] < distTo[city] - graph.weight(city, currCityId)) {
                 distTo[city] = distTo[currCityId] + graph.weight(city, currCityId);
@@ -99,15 +99,15 @@ public class ShortestPath {
                 fromCity[city] = currCityId;
             }
 
-            System.out.printf("AFTER  distTo[%d] = %d, fromCity[%d] = %d%n",
-                    city, distTo[city], city, fromCity[city]);
+            System.out.printf("AFTER  distTo[%d] = %d (cur), distTo[%d] = %d (city), fromCity[%d] = %d%n",
+                    currCityId, distTo[currCityId], city, distTo[city], city, fromCity[city]);
         }
     }
 
     public static int solution_distance(WeightedGraph graph, int from, int to, int citiesQty) {
         int[] fromCity = new int[citiesQty];
         int[] distTo = new int[citiesQty];
-        PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.comparingInt(city -> distTo[city]));
+        Queue<Integer> pq = new PriorityQueue<>(Comparator.comparingInt(city -> distTo[city]));
 
         for(int i = 0; i < citiesQty; i++){
             distTo[i] = (i == from) ? 0 : INF;

@@ -129,6 +129,53 @@ public class ShortestPathTest {
         int N = in.nextInt();
         int citiesQty = graph.V();
         int[][] tests = new int[N][2];
+        for (int i = 0; i < N; i++) {
+            tests[i][0] = in.nextInt();
+            tests[i][1] = in.nextInt();
+        }
+
+        for (int i = 0; i < N; i++) {
+            int v = tests[i][0];
+            int u = tests[i][1];
+            int result = solution_distance(graph, v, u, citiesQty);
+            //System.out.printf("expected = %d, result = %d%n", expected[i], result);
+            assertEquals(expected[i], result);
+        }
+    }
+
+    @Test
+    public void testShortestPathCodegym4() {
+        String input = "15 21\n" +
+                "0 5 8\n" +
+                "0 13 3\n" +
+                "0 6 2\n" +
+                "1 4 7\n" +
+                "1 7 9\n" +
+                "1 9 7\n" +
+                "2 11 5\n" +
+                "2 10 1\n" +
+                "2 6 3\n" +
+                "3 11 1\n" +
+                "4 14 1\n" +
+                "4 10 7\n" +
+                "4 6 5\n" +
+                "4 9 8\n" +
+                "5 11 9\n" +
+                "5 9 1\n" +
+                "6 12 2\n" +
+                "6 9 4\n" +
+                "7 10 5\n" +
+                "10 13 1\n" +
+                "11 12 8\n" +
+                "1\n" +
+                "14 7\n";
+        int[] expected = {13};
+        ScannerFromString in = new ScannerFromString(input);
+        ShortestPath.WeightedGraph graph = readGraph(in);
+        // read test values
+        int N = in.nextInt();
+        int citiesQty = graph.V();
+        int[][] tests = new int[N][2];
         for(int i = 0; i < N; i++){
             tests[i][0]=in.nextInt();
             tests[i][1]=in.nextInt();
