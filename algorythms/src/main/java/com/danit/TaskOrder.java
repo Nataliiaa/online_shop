@@ -36,13 +36,13 @@ public class TaskOrder {
             }
         }
 
-/*
-        public void remove(int u, int v) {
+
+/*        public void remove(int u, int v) {
             if (adjacent[u].contains(v)) {
                 adjacent[u].remove(v);
             }
-        }
-*/
+        }*/
+
 
         public Integer[] adj(int v) {
             Integer[] vertices = new Integer[adjacent[v].size()];
@@ -61,11 +61,67 @@ public class TaskOrder {
         return graph;
     }
 
-    public static String topologicalSort1(Graph graph) {
+    public static String topologicalSort(Graph graph) {
         // Empty list that will contain the sorted elements
         ArrayList<Integer> L = new ArrayList<>();
+        Set<Integer> S = findStarts(graph);
+        while (!S.isEmpty()) {
+            for (Integer nodeN : S) {
+                S.remove(nodeN);
+                L.add(nodeN);
+                Integer[] nodesFromN = graph.adj(nodeN);
+                for (Integer nodeM : nodesFromN) {
+                    removeEdge(graph, nodeN, nodeM);
+                    if (hasNoIncoming(graph, nodeM)) {
+                        S.add(nodeM);
+                    }
+                }
+            }
+        }
+        if (graphHasEdges(graph)) {
+            return "graph has at least one cycle";
+        } else {
+            return L.stream().map(TaskOrder::intToStr).collect(Collectors.joining(" "));
+        }
+    }
 
-        return L.stream().map(TaskOrder::intToStr).collect(Collectors.joining(" "));
+    private static boolean hasNoIncoming(Graph graph, Integer nodeM) {
+        for (int v = 0; v < graph.V; v++) {
+            Integer[] vertex = graph.adj(v);
+            for(Integer i  : vertex) {
+                if (i == nodeM) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private static void removeEdge(Graph graph, Integer nodeN, Integer nodeM) {
+        if (graph.adjacent[nodeN].contains(nodeM)) {
+            graph.adjacent[nodeN].remove(nodeM);
+            graph.E--;
+        }
+    }
+
+    private static boolean graphHasEdges(Graph graph) {
+/*        for (int v = 0; v < graph.V; v++) {
+            Integer[] vertex = graph.adj(v);
+            if(vertex.length > 0) {
+                return true;
+            }
+        }*/
+        return graph.E > 0;
+    }
+
+    private static Set<Integer> findStarts(Graph graph) {
+        HashSet<Integer> set = new HashSet<>();
+        for (int v = 0; v < graph.V; v++) {
+            if(hasNoIncoming(graph, v)) {
+                set.add(v);
+            }
+        }
+        return set;
     }
 
     public static void main(String[] args) {
@@ -85,7 +141,7 @@ public class TaskOrder {
             System.out.printf("[%s]\n", Arrays.stream(graph.adj(i)).map(x->Integer.toString(x)).collect(Collectors.joining(",")));
         }
         System.out.printf("Checking whether the Graph contains cycles: %s\n", hasCycles(graph));
-        System.out.printf("Sorted:%s",topologicalSort1(graph));
+        System.out.printf("Sorted:%s", topologicalSort(graph));
     }
 
     private static boolean hasCycles(Graph graph, int curVertex, boolean[] visited, HashSet<Integer> path) {
