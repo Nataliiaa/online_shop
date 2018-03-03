@@ -44,6 +44,7 @@ public class DijkstraAlgorithmBase {
         for (int city : neighbours(currCityId)) {
             if (distTo[currCityId] + distances[city][currCityId] < distTo[city]) {
                 distTo[city] = distTo[currCityId] + distances[city][currCityId];
+                // path
                 fromCity[city] = currCityId;
             }
         }
