@@ -105,12 +105,6 @@ public class TaskOrder {
     }
 
     private static boolean graphHasEdges(Graph graph) {
-/*        for (int v = 0; v < graph.V; v++) {
-            Integer[] vertex = graph.adj(v);
-            if(vertex.length > 0) {
-                return true;
-            }
-        }*/
         return graph.E > 0;
     }
 

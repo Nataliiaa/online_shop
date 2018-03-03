@@ -5,10 +5,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.Stack;
 
-public class TaskOrderV2 {
-    private static String intToStr(Integer n) {
-        return Integer.toString(n);
-    }
+public class TaskOrderV2recursive {
 
     public static class Graph {
         int E, V;
@@ -37,14 +34,6 @@ public class TaskOrderV2 {
             }
         }
 
-/*
-        public void remove(int u, int v) {
-            if (adjacent[u].contains(v)) {
-                adjacent[u].remove(v);
-            }
-        }
-*/
-
         public Integer[] adj(int v) {
             Integer[] vertices = new Integer[adjacent[v].size()];
             return adjacent[v].toArray(vertices);
@@ -62,10 +51,10 @@ public class TaskOrderV2 {
         return graph;
     }
 
-    public static void topologycalSort(Graph DG){
-        boolean visited[]  = new boolean[DG.V()];
-        Stack<Integer> stack = new Stack<Integer>();
-        topologycalSort(DG,visited,0, stack);
+    public static void topologycalSort(Graph graph){
+        boolean visited[]  = new boolean[graph.V()];
+        Stack<Integer> stack = new Stack<>();
+        topologycalSort(graph, visited,0, stack);
         stack.push(0);
 
         System.out.print(stack.pop());
@@ -78,9 +67,8 @@ public class TaskOrderV2 {
         for(int u : DG.adj(v)){
             if(!visited[u]){
                 visited[u] = true;
-                topologycalSort(DG,visited,u,stack);
+                topologycalSort(DG, visited, u, stack);
                 stack.push(u);
-
             }
         }
     }
