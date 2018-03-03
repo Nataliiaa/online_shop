@@ -84,23 +84,17 @@ public class ShortestPath {
     }
 
     public static void relax(WeightedGraph graph, Queue<Integer> pq, int[] distTo, int[] fromCity) {
-        int currCityId = pq.poll();
-        System.out.println("======================================================");
-        System.out.printf("distTo = %s%n", Arrays.toString(distTo));
-        System.out.printf("City = %d%n", currCityId);
+        while(!pq.isEmpty()) {
+            int currCityId = pq.poll();
 
-        for (int city : graph.adj(currCityId)) {
-            System.out.printf("BEFORE distTo[%d] = %d (cur), distTo[%d] = %d (city), graph.weight(%d, %d) = %d%n",
-                    currCityId, distTo[currCityId], city, distTo[city], city, currCityId, graph.weight(city, currCityId));
-
-            if (distTo[currCityId] < distTo[city] - graph.weight(city, currCityId)) {
-                distTo[city] = distTo[currCityId] + graph.weight(city, currCityId);
-                // path
-                fromCity[city] = currCityId;
+            for (int city : graph.adj(currCityId)) {
+                if (distTo[currCityId] < distTo[city] - graph.weight(city, currCityId)) {
+                    distTo[city] = distTo[currCityId] + graph.weight(city, currCityId);
+                    // path
+                    fromCity[city] = currCityId;
+                    pq.add(city);
+                }
             }
-
-            System.out.printf("AFTER  distTo[%d] = %d (cur), distTo[%d] = %d (city), fromCity[%d] = %d%n",
-                    currCityId, distTo[currCityId], city, distTo[city], city, fromCity[city]);
         }
     }
 
@@ -111,14 +105,10 @@ public class ShortestPath {
 
         for(int i = 0; i < citiesQty; i++){
             distTo[i] = (i == from) ? 0 : INF;
-            pq.add(i);
         }
 
-        while(!pq.isEmpty()){
-            relax(graph, pq, distTo, fromCity);
-        }
-
-        // FIXME
+        pq.add(from);
+        relax(graph, pq, distTo, fromCity);
 
         return (distTo[to] == INF) ? -1 : distTo[to];
     }
