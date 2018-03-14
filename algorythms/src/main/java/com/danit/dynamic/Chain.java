@@ -5,6 +5,7 @@ import java.util.stream.IntStream;
 
 public class Chain {
 
+
     /**
      Given three links of length: 1m, 2m, 3m.
      How many ways exist to make a chain of length N.
