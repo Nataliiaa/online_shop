@@ -14,7 +14,7 @@ http://www.eecs.qmul.ac.uk/~mmh/APD/bloch/generics.pdf
 3. OOP принципи
 https://www.javatpoint.com/java-oops-concepts
 4. java.io
- https://docs.oracle.com/javase/tutorial/essential/io/streams.html тут потрібно прочитати про I/O Streams
+ https://docs.oracle.com/javase/tutorial/essential/io/streams.html тут потрібно прочитати про I/O Streams 
  подивіться на туторіал тут https://www.tutorialspoint.com/java/io/index.htm
 5. exceptions
      hierarchy  
