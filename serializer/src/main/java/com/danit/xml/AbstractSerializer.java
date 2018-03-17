@@ -5,6 +5,10 @@ import java.io.OutputStream;
 
 public abstract class AbstractSerializer<T> implements Serializer <T>{
 
+    public void write(OutputStream os, Integer data){
+        write(os, String.valueOf(data));
+    }
+
     public void write(OutputStream os, String shape){
         try {
             os.write(shape.getBytes());

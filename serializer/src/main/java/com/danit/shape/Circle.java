@@ -19,4 +19,12 @@ public class Circle extends AbstractShape {
         this.y = y;
         this.radius = radius;
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 }
