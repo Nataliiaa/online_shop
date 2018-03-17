@@ -1,5 +1,6 @@
 package com.danit.xml;
 
+import com.danit.shape.Circle;
 import com.danit.shape.Group;
 import com.danit.shape.Shape;
 import com.danit.shape.Square;
@@ -16,10 +17,11 @@ public class XMLSerializer implements Serializer<Shape> {
 
     private XMLSerializer() {
         serializers.put(Square.class.getCanonicalName(), new SquareSerializer());
+        serializers.put(Circle.class.getCanonicalName(), new CircleSerializer());
         serializers.put(Group.class.getCanonicalName(), new GroupSerializer());
     }
 
-    public static XMLSerializer getXmlSerializer(){
+    public static Serializer getXmlSerializer(){
         return xmlSerializer;
     }
 

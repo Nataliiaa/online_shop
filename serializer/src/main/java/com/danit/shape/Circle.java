@@ -1,6 +1,9 @@
 package com.danit.shape;
 
 public class Circle extends AbstractShape {
+
+    private int x;
+    private int y;
     private int radius;
 
     public int getRadius() {
@@ -11,7 +14,9 @@ public class Circle extends AbstractShape {
         this.radius = radius;
     }
 
-    public Circle(int radius) {
+    public Circle(int x, int y, int radius) {
+        this.x = x;
+        this.y = y;
         this.radius = radius;
     }
 }
