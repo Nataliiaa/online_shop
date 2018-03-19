@@ -4,6 +4,7 @@ import com.danit.shape.Circle;
 import com.danit.shape.Group;
 import com.danit.shape.Shape;
 import com.danit.shape.Square;
+import sun.security.provider.SHA;
 
 import java.io.OutputStream;
 import java.util.HashMap;
@@ -21,7 +22,7 @@ public class XMLSerializer implements Serializer<Shape> {
         serializers.put(Group.class.getCanonicalName(), new GroupSerializer());
     }
 
-    public static Serializer getXmlSerializer(){
+    public static Serializer<Shape> getXmlSerializer(){
         return xmlSerializer;
     }
 
