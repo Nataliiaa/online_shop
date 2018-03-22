@@ -27,7 +27,13 @@ public class ProductPageServlet extends HttpServlet {
                 .append("</p>")
                 .append("<h3>$")
                 .append(product.getPrice())
-                .append("</h3><a href='/'>&lt; home page</a></body></html>");
+                .append("</h3><p><form method='POST' action='/cart/products'>")
+                .append("<input type='hidden' name='productId' value='")
+                .append(product.getId())
+                .append("'>")
+                .append("<button type='submit'>Add to Cart</button>")
+                .append("</form></p>")
+                .append("<p><a href='/'>&lt; home page</a></p></body></html>");
 
         return result.toString();
     }

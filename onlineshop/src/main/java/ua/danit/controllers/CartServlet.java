@@ -23,16 +23,26 @@ public class CartServlet extends HttpServlet {
                 .append("<h1>Cart:</h1>")
                 .append("<ul>");
 
-        for(Product product : cart) {
-            result.append("<li><a href='/product/?productId=")
-                    .append(product.getId())
-                    .append("'>")
-                    .append(product.getTitle())
-                    .append("</a>")
-                    .append("</li>");
+        int totalCost = 0;
+
+        if (cart.isEmpty()) {
+            result.append("<p>Cart is empty</p>");
+        } else {
+            for (Product product : cart) {
+                result.append("<li><a href='/product/?productId=")
+                        .append(product.getId())
+                        .append("'>")
+                        .append(product.getTitle())
+                        .append("</a>")
+                        .append("</li>");
+                totalCost += product.getPrice();
+            }
         }
 
-        result.append("</ul><p><form action='/cart/order/'><button type='submit'>Buy Now</button></form></p>")
+        result.append("</ul><p>")
+                .append("<p>Total cost: $")
+                .append(totalCost)
+                .append("</p><p><form action='/cart/order/'><button type='submit'>Buy Now</button></form></p>")
                 .append("<p><a href='/'>&lt; home page</a></p></body></html>");
         return result.toString();
     }
