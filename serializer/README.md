@@ -2,8 +2,6 @@
 
 Serializer project
 
-Serializer project
-
 #Lesson 2 (17.03)
 1. Maven
 
