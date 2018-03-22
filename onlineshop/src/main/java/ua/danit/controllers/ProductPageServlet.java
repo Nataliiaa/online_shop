@@ -20,9 +20,12 @@ public class ProductPageServlet extends HttpServlet {
                 .append("<h2>")
                 .append(product.getTitle())
                 .append("</h2><p>")
+                .append("<img src='")
+                .append(product.getImageUrl())
+                .append("' width='400px'></p><p>")
                 .append(product.getDescription())
                 .append("</p>")
-                .append("<h3>")
+                .append("<h3>$")
                 .append(product.getPrice())
                 .append("</h3><a href='/'>&lt; home page</a></body></html>");
 
