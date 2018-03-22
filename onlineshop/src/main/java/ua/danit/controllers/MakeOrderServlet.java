@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 @WebServlet (urlPatterns = "/cart/order/")
 public class MakeOrderServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CartServlet.cart = new ArrayList<>();

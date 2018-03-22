@@ -2,14 +2,14 @@ package ua.danit.model;
 
 public class Product {
 
-    private long id;
-    private String name;
-    private String description;
-    private int price;
+    private final Long id;
+    private final String title;
+    private final String description;
+    private final int price;
 
-    public Product(long id, String name, String description, int price) {
+    public Product(Long id, String title, String description, int price) {
         this.id = id;
-        this.name = name;
+        this.title = title;
         this.description = description;
         this.price = price;
     }
@@ -18,31 +18,15 @@ public class Product {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public String getTitle() {
+        return title;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public int getPrice() {
         return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 }

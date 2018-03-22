@@ -12,12 +12,12 @@ import java.io.IOException;
 @WebServlet (urlPatterns = "/product/")
 public class ProductPageServlet extends HttpServlet {
 
-    protected String getProductDescription(Product product) {
+    private String getProductDescription(Product product) {
         StringBuilder result = new StringBuilder();
         result.append("<html><body>")
                 .append("<h1>Product:</h1>")
                 .append("<h2>")
-                .append(product.getName())
+                .append(product.getTitle())
                 .append("</h2><p>")
                 .append(product.getDescription())
                 .append("</p>")

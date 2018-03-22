@@ -11,10 +11,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(urlPatterns = "/")
+@WebServlet(name = "mainServlet", urlPatterns = "/", loadOnStartup = 1)
 public class MainPageServlet extends HttpServlet {
 
-    public static Map<Long, Product> products = new HashMap<>();
+    static Map<Long, Product> products = new HashMap<>();
 
     static {
         products.put(1L, new Product(1L, "MacBook Pro", "super puper macbook", 2000));
@@ -22,9 +22,7 @@ public class MainPageServlet extends HttpServlet {
         products.put(3L, new Product(3L, "GoF", "patterns book", 10));
     }
 
-    private String page;
-
-    public String getPage() {
+    private String getPage() {
         StringBuilder result = new StringBuilder();
         result.append("<html><body>")
                 .append("<h1>Products:</h1><ul>");
@@ -33,7 +31,7 @@ public class MainPageServlet extends HttpServlet {
                 .append("<li><a href='/product/?productId=")
                 .append(e.getId())
                 .append("'>")
-                .append(e.getName())
+                .append(e.getTitle())
                 .append("</a>")
                 .append("<form method='POST' action='/cart/products'>")
                 .append("<input type='hidden' name='productId' value='")

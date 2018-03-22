@@ -14,13 +14,13 @@ import java.util.List;
 @WebServlet(urlPatterns = "/cart/products")
 public class AddToCartServlet extends HttpServlet {
 
-
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long productId = Long.valueOf(req.getParameter("productId"));
         Product product = MainPageServlet.products.get(productId);
-        CartServlet.cart.add(product);
+        if (product != null) {
+            CartServlet.cart.add(product);
+        }
         resp.sendRedirect("/");
     }
 }

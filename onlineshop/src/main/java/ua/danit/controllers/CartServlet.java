@@ -16,7 +16,7 @@ public class CartServlet extends HttpServlet {
 
     public static List<Product> cart = new ArrayList<>();
 
-    protected String getCartContents() {
+    private String getCartContents() {
         StringBuilder result = new StringBuilder();
         result.append("<html><body>")
                 .append("<h1>Cart:</h1>")
@@ -24,7 +24,7 @@ public class CartServlet extends HttpServlet {
 
         for(Product product : cart) {
             result.append("<li>");
-            result.append(product.getName());
+            result.append(product.getTitle());
             result.append("</li>");
         }
 
