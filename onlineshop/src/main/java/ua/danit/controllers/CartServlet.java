@@ -11,21 +11,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet (urlPatterns = "/cart/")
+@WebServlet (name = "cartServlet", urlPatterns = "/cart/")
 public class CartServlet extends HttpServlet {
 
     public static List<Product> cart = new ArrayList<>();
 
-    private String getCartContents() {
+    private String buildCartContentsPage() {
         StringBuilder result = new StringBuilder();
-        result.append("<html><body>")
+        result.append("<html><link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">")
+                .append("<body>")
                 .append("<h1>Cart:</h1>")
                 .append("<ul>");
 
         for(Product product : cart) {
-            result.append("<li>");
-            result.append(product.getTitle());
-            result.append("</li>");
+            result.append("<li><a href='/product/?productId=")
+                    .append(product.getId())
+                    .append("'>")
+                    .append(product.getTitle())
+                    .append("</a>")
+                    .append("</li>");
         }
 
         result.append("</ul><p><form action='/cart/order/'><button type='submit'>Buy Now</button></form></p>")
@@ -35,7 +39,7 @@ public class CartServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getOutputStream().print(getCartContents());
+        resp.getOutputStream().print(buildCartContentsPage());
         resp.getOutputStream().flush();
     }
 }

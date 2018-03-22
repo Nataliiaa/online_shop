@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(urlPatterns = "/cart/products")
+@WebServlet(name = "addToCartServlet", urlPatterns = "/cart/products")
 public class AddToCartServlet extends HttpServlet {
 
     @Override

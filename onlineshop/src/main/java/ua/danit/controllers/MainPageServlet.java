@@ -22,9 +22,16 @@ public class MainPageServlet extends HttpServlet {
         products.put(3L, new Product(3L, "GoF", "patterns book", 10));
     }
 
-    private String getPage() {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.getOutputStream().print(buildPage());
+        resp.getOutputStream().flush();
+    }
+
+    private String buildPage() {
         StringBuilder result = new StringBuilder();
-        result.append("<html><body>")
+        result.append("<html><link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">")
+                .append("<body>")
                 .append("<h1>Products:</h1><ul>");
 
         products.values().forEach(e -> result
@@ -48,11 +55,5 @@ public class MainPageServlet extends HttpServlet {
                 .append("</a>")
                 .append("</ul></body></html>");
         return result.toString();
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getOutputStream().print(getPage());
-        resp.getOutputStream().flush();
     }
 }

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet (urlPatterns = "/cart/order/")
+@WebServlet (name = "makeOrderServlet", urlPatterns = "/cart/order/")
 public class MakeOrderServlet extends HttpServlet {
 
     @Override

@@ -9,12 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet (urlPatterns = "/product/")
+@WebServlet (name = "productPage    Servlet", urlPatterns = "/product/")
 public class ProductPageServlet extends HttpServlet {
 
-    private String getProductDescription(Product product) {
+    private String buildProductDescriptionPage(Product product) {
         StringBuilder result = new StringBuilder();
-        result.append("<html><body>")
+        result.append("<html><link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">")
+                .append("<body>")
                 .append("<h1>Product:</h1>")
                 .append("<h2>")
                 .append(product.getTitle())
@@ -32,7 +33,7 @@ public class ProductPageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long productId = Long.parseLong(req.getParameter("productId"));
         Product product = MainPageServlet.products.get(productId);
-        resp.getOutputStream().print(getProductDescription(product));
+        resp.getOutputStream().print(buildProductDescriptionPage(product));
         resp.getOutputStream().flush();
     }
 }
