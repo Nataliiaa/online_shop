@@ -11,19 +11,31 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "cartServlet", urlPatterns = "/cart/products")
+@WebServlet (urlPatterns = "/cart/")
 public class CartServlet extends HttpServlet {
 
     public static List<Product> cart = new ArrayList<>();
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Long productId = Long.valueOf(req.getParameter("productId"));
-        Product p = MainPageServlet.products.get(productId);
+    protected String getCartContents() {
+        StringBuilder result = new StringBuilder();
+        result.append("<html><body>")
+                .append("<h1>Cart:</h1>")
+                .append("<ul>");
 
-        if (p != null) {
-            cart.add(p);
+        for(Product product : cart) {
+            result.append("<li>");
+            result.append(product.getName());
+            result.append("</li>");
         }
-        resp.sendRedirect("/");
+
+        result.append("</ul><p><form action='/cart/order/'><button type='submit'>Buy Now</button></form></p>")
+                .append("<p><a href='/'>&lt; home page</a></p></body></html>");
+        return result.toString();
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.getOutputStream().print(getCartContents());
+        resp.getOutputStream().flush();
     }
 }

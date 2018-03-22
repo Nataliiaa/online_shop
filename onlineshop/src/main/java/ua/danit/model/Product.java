@@ -2,31 +2,47 @@ package ua.danit.model;
 
 public class Product {
 
-    private final Long id;
-    private final String title;
-    private final String description;
-    private final int price;
+    private long id;
+    private String name;
+    private String description;
+    private int price;
 
-    public Product(Long id, String title, String description, int price) {
+    public Product(long id, String name, String description, int price) {
         this.id = id;
-        this.title = title;
+        this.name = name;
         this.description = description;
         this.price = price;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public String getTitle() {
-        return title;
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public int getPrice() {
         return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

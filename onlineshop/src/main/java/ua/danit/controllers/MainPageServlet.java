@@ -2,6 +2,7 @@ package ua.danit.controllers;
 
 import ua.danit.model.Product;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,48 +11,50 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(name = "mainServlet", urlPatterns = "/", loadOnStartup = 1)
+@WebServlet(urlPatterns = "/")
 public class MainPageServlet extends HttpServlet {
 
-    static Map<Long, Product> products = new HashMap<Long, Product>();
+    public static Map<Long, Product> products = new HashMap<>();
 
     static {
-        products.put(1L, new Product(1L, "MacBook Pro", "", 200));
-        products.put(2L, new Product(2L, "Algorithms, 4th Edition", "", 500));
-        products.put(3L, new Product(3L, "Notebook Green", "", 100));
+        products.put(1L, new Product(1L, "MacBook Pro", "super puper macbook", 2000));
+        products.put(2L, new Product(2L, "Asus Zenbook", "simpler laptop", 1000));
+        products.put(3L, new Product(3L, "GoF", "patterns book", 10));
     }
 
+    private String page;
 
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.getOutputStream().print(buildPage());
-        response.getOutputStream().flush();
-    }
-
-    private String buildPage() {
+    public String getPage() {
         StringBuilder result = new StringBuilder();
-        result.append("<html><body><ul>");
-        for (Product p : products.values()) {
-            result.append("<li>")
-                    .append(p.getTitle())
-                    .append("<form method='POST' action='/cart/products'>")
-                    .append("<input type='hidden' name='productId' value='")
-                    .append(p.getId())
-                    .append("'/>")
-                    .append("<button type='submit'>Add to Cart</button>")
-                    .append("</form></li>");
-        }
-        if (!CartServlet.cart.isEmpty()) {
-            result.append("<h3>Your cart</h3>");
+        result.append("<html><body>")
+                .append("<h1>Products:</h1><ul>");
 
-            for (Product p: CartServlet.cart) {
-                result.append("<div>").append(p.getTitle()).append("</div>");
-            }
-        }
+        products.values().forEach(e -> result
+                .append("<li><a href='/product/?productId=")
+                .append(e.getId())
+                .append("'>")
+                .append(e.getName())
+                .append("</a>")
+                .append("<form method='POST' action='/cart/products'>")
+                .append("<input type='hidden' name='productId' value='")
+                .append(e.getId())
+                .append("'>")
+                .append("<button type='submit'>Add to Cart</button>")
+                .append("</form>")
+                .append("</li>")
+        );
 
-        result.append("</ul></body></html>");
+        result.append("</ul>")
+                .append("<a href='/cart/'>Cart Items:")
+                .append(CartServlet.cart.size())
+                .append("</a>")
+                .append("</ul></body></html>");
         return result.toString();
     }
 
-
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.getOutputStream().print(getPage());
+        resp.getOutputStream().flush();
+    }
 }
