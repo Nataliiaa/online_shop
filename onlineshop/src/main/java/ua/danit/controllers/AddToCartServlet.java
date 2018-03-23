@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO: rename class
 @WebServlet(name = "addToCartServlet", urlPatterns = "/cart/products")
 public class AddToCartServlet extends HttpServlet {
 

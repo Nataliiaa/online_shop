@@ -23,6 +23,7 @@ public class CartServlet extends HttpServlet {
                 .append("<h1>Cart:</h1>")
                 .append("<ul>");
 
+        //TODO: move total to another page
         int totalCost = 0;
 
         if (cart.isEmpty()) {
