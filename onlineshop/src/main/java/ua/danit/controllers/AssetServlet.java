@@ -2,6 +2,7 @@ package ua.danit.controllers;
 
 import com.google.common.io.Files;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,8 +19,10 @@ public class AssetServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getPathInfo();
         File file = new File("resources" + path);
+        String mimeType = getServletContext().getMimeType(path);
 
         if (file.exists()) {
+            resp.setContentType(mimeType);
             resp.getWriter().write(Files.toString(file, Charset.defaultCharset()));
         } else {
             resp.getWriter().write("Can't find file" + path);

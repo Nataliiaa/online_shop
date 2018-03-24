@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 import static ua.danit.service.ProductService.PRODUCT_SERVICE;
 
@@ -20,25 +19,41 @@ public class CartActionServlet extends HttpServlet {
     private final ProductService productService = PRODUCT_SERVICE;
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getPathInfo();
-        Long productId = Long.valueOf(req.getParameter("productId"));
 
-        Product product = productService.getProductById(productId);
-
-        if(Actions.ADD.getAction().equals(action)){
-            CartServlet.cart.add(product);
+        if (Actions.ADD.getAction().equals(action)) {
+            Product product = getProductId(req);
+            CartServlet.addToCart(product);
         }
-        resp.sendRedirect("/");
+
+        if (Actions.REMOVE.getAction().equals(action)) {
+            Product product = getProductId(req);
+            CartServlet.removeProductFromCart(product);
+        }
+
+        if (Actions.REMOVEALL.getAction().equals(action)) {
+            CartServlet.removeAllFromCart();
+        }
+
+        resp.sendRedirect("/cart");
+    }
+
+    private Product getProductId(HttpServletRequest req) {
+        Long productId = Long.valueOf(req.getParameter("productId"));
+        return productService.getProductById(productId);
     }
 
 
-    private enum Actions{
-        ADD("/add"), REMOVE("/remove");
+    private enum Actions {
+        ADD("/add"), REMOVE("/remove"), REMOVEALL("/removeall");
+
         Actions(String action) {
             this.action = action;
         }
+
         private String action;
+
         public String getAction() {
             return action;
         }

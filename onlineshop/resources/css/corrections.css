@@ -1,0 +1,12 @@
+body {
+    padding-top: 0;
+}
+
+.card-img-top {
+    width: 50%;
+    margin: 20px auto;
+}
+
+.row {
+    margin-bottom: 0;
+}

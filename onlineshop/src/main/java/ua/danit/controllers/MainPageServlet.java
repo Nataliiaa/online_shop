@@ -21,42 +21,32 @@ public class MainPageServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getOutputStream().print(buildPage());
-        resp.getOutputStream().flush();
+        setupHeaderAttributes(req);
+        setupMainPageAttributes(req);
+        req.getRequestDispatcher("WEB-INF/views/products.ftl").forward(req, resp);
     }
 
-    private String buildPage() {
-        StringBuilder result = new StringBuilder();
-        result.append("<html><link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">")
-                .append("<body>")
-                .append("<h1>Products:</h1><ul>");
+    private void setupMainPageAttributes(HttpServletRequest req) {
+        String category = req.getParameter("category");
+        List<Product> products;
+        String currentCategory;
 
+        if (category == null) {
+            products = productService.getAllProducts();
+            currentCategory = "All Products";
+        } else {
+            products = productService.getProductByCategory(Category.valueOf(category));
+            currentCategory = Category.valueOf(category).getTitle();
+        }
 
-        List<Product> products = productService.getAllProducts();
-
-        products.forEach(e -> result
-                .append("<li><a href='/product?productId=")
-                .append(e.getId())
-                .append("'>")
-                .append(e.getTitle())
-                .append("</a>")
-                .append("<form method='POST' action='/cart/action/add'>")
-                .append("<input type='hidden' name='productId' value='")
-                .append(e.getId())
-                .append("'>")
-                .append("<button type='submit'>Add to Cart</button>")
-                .append("</form>")
-                .append("</li>")
-        );
-
-        result.append("</ul>")
-                .append("<a href='/cart'>Cart Items:")
-                .append(CartServlet.cart.size())
-                .append("</a>")
-                .append("</ul></body></html>");
-        return result.toString();
+        req.setAttribute("products", products);
+        req.setAttribute("currentCategory", currentCategory);
     }
 
-
-
+    public void setupHeaderAttributes(HttpServletRequest req) {
+        int cartSize = CartServlet.cart.size();
+        req.setAttribute("cartSize", cartSize);
+        Category[] categories = Category.values();
+        req.setAttribute("categories", categories);
+    }
 }

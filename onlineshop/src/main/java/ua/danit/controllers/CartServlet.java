@@ -8,49 +8,45 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet (name = "cartServlet", urlPatterns = "/cart")
 public class CartServlet extends HttpServlet {
 
-    public static List<Product> cart = new ArrayList<>();
-
-    private String buildCartContentsPage() {
-        StringBuilder result = new StringBuilder();
-        result.append("<html><link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">")
-                .append("<body>")
-                .append("<h1>Cart:</h1>")
-                .append("<ul>");
-
-        //TODO: move total to another page
-        int totalCost = 0;
-
-        if (cart.isEmpty()) {
-            result.append("<p>Cart is empty</p>");
-        } else {
-            for (Product product : cart) {
-                result.append("<li><a href='/product/?productId=")
-                        .append(product.getId())
-                        .append("'>")
-                        .append(product.getTitle())
-                        .append("</a>")
-                        .append("</li>");
-                totalCost += product.getPrice();
-            }
-        }
-
-        result.append("</ul><p>")
-                .append("<p>Total cost: $")
-                .append(totalCost)
-                .append("</p><p><form action='/cart/order'><button type='submit'>Buy Now</button></form></p>")
-                .append("<p><a href='/'>&lt; home page</a></p></body></html>");
-        return result.toString();
-    }
+    public static Map<Product, Integer> cart = new HashMap<>();
+    public static int cartTotal = 0;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getOutputStream().print(buildCartContentsPage());
-        resp.getOutputStream().flush();
+        MainPageServlet mainPageServlet = new MainPageServlet();
+        mainPageServlet.setupHeaderAttributes(req);
+        setupCartAttributes(req);
+        req.getRequestDispatcher("WEB-INF/views/cart.ftl").forward(req, resp);
+    }
+
+    private void setupCartAttributes(HttpServletRequest req) {
+        req.setAttribute("emptyCart", cart.isEmpty());
+        req.setAttribute("cart", cart.entrySet());
+        req.setAttribute("cartTotal", cartTotal);
+    }
+
+    public static void addToCart(Product product) {
+        Integer productCount = CartServlet.cart.getOrDefault(product, 0);
+        cart.put(product, ++productCount);
+        cartTotal += product.getPrice();
+    }
+
+    public static void removeProductFromCart(Product product) {
+        Integer productCount = CartServlet.cart.getOrDefault(product, 0);
+        if (productCount > 0) {
+            cartTotal -= product.getPrice() * productCount;
+            CartServlet.cart.remove(product);
+        }
+    }
+
+    public static void removeAllFromCart() {
+        CartServlet.cart = new HashMap<>();
+        cartTotal = 0;
     }
 }
