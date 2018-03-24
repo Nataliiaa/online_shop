@@ -1,6 +1,7 @@
 package ua.danit.controllers;
 
 import ua.danit.model.Product;
+import ua.danit.service.ProductService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,8 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static ua.danit.service.ProductService.PRODUCT_SERVICE;
+
 @WebServlet (name = "productPageServlet", urlPatterns = "/product")
 public class ProductPageServlet extends HttpServlet {
+
+    private final ProductService productService = PRODUCT_SERVICE;
 
     private String buildProductDescriptionPage(Product product) {
         StringBuilder result = new StringBuilder();
@@ -27,7 +32,7 @@ public class ProductPageServlet extends HttpServlet {
                 .append("</p>")
                 .append("<h3>$")
                 .append(product.getPrice())
-                .append("</h3><p><form method='POST' action='/cart/products'>")
+                .append("</h3><p><form method='POST' action='/cart/action/add'>")
                 .append("<input type='hidden' name='productId' value='")
                 .append(product.getId())
                 .append("'>")
@@ -41,7 +46,7 @@ public class ProductPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long productId = Long.parseLong(req.getParameter("productId"));
-        Product product = MainPageServlet.products.get(productId);
+        Product product = productService.getProductById(productId);
         resp.getOutputStream().print(buildProductDescriptionPage(product));
         resp.getOutputStream().flush();
     }

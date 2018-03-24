@@ -2,6 +2,46 @@
 
 OnlineShop project
 
+
+#Lesson 4 (24.03)
+(Servlets part.2)
+
+
+1. Code review та code conventions
+- почитати про іменування методів класів в java Naming Conventions
+http://www.oracle.com/technetwork/java/codeconventions-150003.pdf
+також це описано в книжці по clean code (robert martin)
+- відповідальність одного блок коду за одну дію або S принцип з SOLID
+Single responsibility principle[4]
+a class should have only a single responsibility (i.e. changes to only one part of the software's specification should be able to affect the specification of the class).
+https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)
+- поговорили про  3 layer web architecture strategy (controller, service, dao)
+
+2. Freemarker https://freemarker.apache.org/
+https://www.javaworld.com/article/2074899/java-web-development/freemarker-an-open-alternative-to-jsp.html
+Напишіть hello world на freemarker з додаванням java обєкту  http://viralpatel.net/blogs/freemarker-servlet-tutorial-example/
+one more example https://javabeat.net/freemarker-template-servlet-integration-example/
+
+3. Servlets
+- раджу почтита про request dispatcher https://www.javatpoint.com/requestdispatcher-in-servlet
+- знати чим відрізняються atributes та  parameters в HttpServletRequest https://stackoverflow.com/questions/5243754/difference-between-getattribute-and-getparameter
+- ми розібрали як повертати статичний файл з сервлету. Перегляньте ще раз як це робити 
+- ще раз переглянте,  що таке post request та його особливості https://en.wikipedia.org/wiki/POST_(HTTP)
+
+H/W:
+1. встановити mysql workbench
+2. (servlets tasks) 
+2.1 Доробити головну сторінку:
+- Розподіл товарів по категоріям. Я хочу щоб в нас зявився блок категорій і при натисканні на категрію я бачив тільки товари з даної категорії. Якщо я ще не вибрав категорії - я бачу всі товари.  
+- (optional) оформити список товарі та категорій з використанням класів bootstrap https://getbootstrap.com/ https://getbootstrap.com/docs/4.0/examples/album/
+- Додати можливість додавати коментарі та оцінку товару на сторінці з описом товару
+- Створити нову стоінку з додаванням та прибиранням нового товара (Admin level)
+- На сторінці /cart додати можливість прибирати товар з корзини та очистити корзину
+- (optional) перевести захардкожені сторінки в html template файли з використанням template framework (freemarker) freemarker
+
+3. почитати про template framework freemarker 
+https://freemarker.apache.org/
+
 #Lesson 3 (21.03)
 1. Servlet_Api
 Рекомендовано переглянути та почитати спеку по servlet api 3.1
