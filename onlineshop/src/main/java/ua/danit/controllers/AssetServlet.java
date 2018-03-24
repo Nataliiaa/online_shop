@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.Charset;
 
 @WebServlet (name = "assets", urlPatterns = "/assets/*")
@@ -17,9 +18,11 @@ public class AssetServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String path = req.getPathInfo();
-        File file = new File("resources" + path);
-        String mimeType = getServletContext().getMimeType(path);
+        String pathInfo = req.getPathInfo();
+        URL resource = getClass().getClassLoader().getResource(".");
+        String path = resource.getPath();
+        File file = new File(path + pathInfo);
+        String mimeType = getServletContext().getMimeType(pathInfo);
 
         if (file.exists()) {
             resp.setContentType(mimeType);

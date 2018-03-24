@@ -65,16 +65,16 @@
                 Continue shopping on the <a href="/">DanITShop.com homepage</a>.</p>
         <#else>
             <h3>Shopping Cart</h3>
-            <div class="row">
+            <div class="row row-heading">
                 <div class="col-5">Item</div>
                 <div class="col-2">Price</div>
                 <div class="col-1">Qty</div>
-                <div class="col-2">Total</div>
+                <div class="col-2">Subtotal</div>
                 <div class="col-2">Actions</div>
             </div>
             <#list cart as entry>
                 <div class="row">
-                    <div class="col-5">${entry.key.getTitle()}</div>
+                    <div class="col-5"><a href="#" onclick="window.location.href='/product?productId=${entry.key.getId()}'">${entry.key.getTitle()}</a></div>
                     <div class="col-2">${entry.key.getPrice()}</div>
                     <div class="col-1">${entry.value}</div>
                     <div class="col-2">$${entry.key.getPrice() * entry.value}</div>

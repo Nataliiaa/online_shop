@@ -66,7 +66,7 @@
                         <#list products as product>
                         <div class="col-md-4">
                             <div class="card mb-4 box-shadow">
-                                <img class="card-img-top" src="${product.getImageUrl()}" alt="Card image cap">
+                                <img class="card-img-top clickable" src="${product.getImageUrl()}" alt="${product.getTitle()}" onclick="window.location.href='/product?productId=${product.getId()}'">
                                 <div class="card-body">
                                     <p class="card-text">${product.getTitle()}</p>
                                     <div class="d-flex justify-content-between align-items-center">

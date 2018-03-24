@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 
 import static ua.danit.service.ProductService.PRODUCT_SERVICE;
@@ -36,7 +37,13 @@ public class CartActionServlet extends HttpServlet {
             CartServlet.removeAllFromCart();
         }
 
-        resp.sendRedirect("/cart");
+        String referer = req.getHeader("Referer");
+
+        if (referer != null && !referer.isEmpty()) {
+            resp.sendRedirect(referer);
+        } else {
+            resp.sendRedirect("/cart");
+        }
     }
 
     private Product getProductId(HttpServletRequest req) {

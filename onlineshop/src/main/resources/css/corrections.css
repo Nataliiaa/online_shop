@@ -10,3 +10,11 @@ body {
 .row {
     margin-bottom: 0;
 }
+
+.row-heading {
+    font-weight: bold;
+}
+
+.clickable {
+    cursor: pointer;
+}

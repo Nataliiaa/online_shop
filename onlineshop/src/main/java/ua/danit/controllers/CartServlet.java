@@ -1,6 +1,9 @@
 package ua.danit.controllers;
 
+import com.google.common.collect.ImmutableMap;
+import ua.danit.model.Category;
 import ua.danit.model.Product;
+import ua.danit.service.TemplateLoader;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,8 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 @WebServlet (name = "cartServlet", urlPatterns = "/cart")
 public class CartServlet extends HttpServlet {
@@ -19,16 +24,19 @@ public class CartServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        MainPageServlet mainPageServlet = new MainPageServlet();
-        mainPageServlet.setupHeaderAttributes(req);
-        setupCartAttributes(req);
-        req.getRequestDispatcher("WEB-INF/views/cart.ftl").forward(req, resp);
+        PrintWriter out = resp.getWriter();
+        TemplateLoader templateLoader = new TemplateLoader();
+        templateLoader.write("cart.ftl", out, ImmutableMap.of(
+                "cartSize", getItemsCount(),
+                "categories", Category.values(),
+                "emptyCart", cart.isEmpty(),
+                "cart", cart.entrySet(),
+                "cartTotal", cartTotal
+        ));
     }
 
-    private void setupCartAttributes(HttpServletRequest req) {
-        req.setAttribute("emptyCart", cart.isEmpty());
-        req.setAttribute("cart", cart.entrySet());
-        req.setAttribute("cartTotal", cartTotal);
+    public static int getItemsCount() {
+        return cart.values().stream().mapToInt(integer -> integer.intValue()).sum();
     }
 
     public static void addToCart(Product product) {

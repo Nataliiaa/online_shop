@@ -14,7 +14,7 @@ public class ProductMockDaoImpl implements ProductDao {
         products.put(Category.mobile, Arrays.asList(
                 new Product(1L,
                         "iPhoneX",
-                        "iPhone X (\"X\" pronounced \"ten\" /tɛn/)[9] is a smartphone designed, developed, and marketed by Apple Inc. It was announced on September 12, 2017, alongside the iPhone 8 and iPhone 8 Plus at the Steve Jobs Theater in the Apple Park campus. The phone was released on November 3, 2017. This device marks the iPhone series' tenth anniversary, with \"X\" being the symbol for \"ten\" in Roman numerals.",
+                        "iPhone X is a smartphone designed, developed, and marketed by Apple Inc. It was announced on September 12, 2017, alongside the iPhone 8 and iPhone 8 Plus at the Steve Jobs Theater in the Apple Park campus. The phone was released on November 3, 2017. This device marks the iPhone series' tenth anniversary, with \"X\" being the symbol for \"ten\" in Roman numerals.",
                         "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/IPhone_X_vector.svg/330px-IPhone_X_vector.svg.png",
                         1000),
                 new Product(2L,
@@ -37,7 +37,7 @@ public class ProductMockDaoImpl implements ProductDao {
         products.put(Category.computer, Arrays.asList(
                 new Product(5L,
                         "MacBook Pro",
-                        "The MacBook Pro (/ˈmækbʊkˈproʊ/ sometimes abbreviated as MBP)[1] is a line of Macintosh portable computers introduced in January 2006 by Apple Inc. Replacing the PowerBook G4, the MacBook Pro was the second model to be announced during the Apple–Intel transition, after the iMac. It is the high-end model of the MacBook family and is currently available in 13- and 15-inch screen sizes. A 17-inch version was available between April 2006 and June 2012.",
+                        "The MacBook Pro is a line of Macintosh portable computers introduced in January 2006 by Apple Inc. Replacing the PowerBook G4, the MacBook Pro was the second model to be announced during the Apple–Intel transition, after the iMac. It is the high-end model of the MacBook family and is currently available in 13- and 15-inch screen sizes. A 17-inch version was available between April 2006 and June 2012.",
                         "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/MacBook_Pro_15_inch_%282017%29_Touch_Bar.jpg/450px-MacBook_Pro_15_inch_%282017%29_Touch_Bar.jpg",
                         2000),
                 new Product(6L,
