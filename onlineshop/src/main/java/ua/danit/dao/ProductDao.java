@@ -8,8 +8,8 @@ import java.util.Map;
 
 public interface ProductDao {
 
-    Map<Category, List<Product>> getAllProducts();
-    List<Product> getProductsByCategory(Category category);
-
+    Map<Category, List<Product>> getAll();
+    List<Product> getByCategory(Category category);
+    void save (Product product);
 
 }

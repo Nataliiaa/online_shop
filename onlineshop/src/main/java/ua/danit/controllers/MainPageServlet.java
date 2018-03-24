@@ -1,5 +1,6 @@
 package ua.danit.controllers;
 
+import ua.danit.model.Category;
 import ua.danit.model.Product;
 import ua.danit.service.ProductService;
 
@@ -9,14 +10,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
+import static ua.danit.service.ProductService.PRODUCT_SERVICE;
 
 @WebServlet(name = "mainServlet", urlPatterns = "/", loadOnStartup = 1)
 public class MainPageServlet extends HttpServlet {
 
-
-    private final ProductService productService = new ProductService();
+    private final ProductService productService = PRODUCT_SERVICE;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,13 +31,16 @@ public class MainPageServlet extends HttpServlet {
                 .append("<body>")
                 .append("<h1>Products:</h1><ul>");
 
-        products.values().forEach(e -> result
-                .append("<li><a href='/product/?productId=")
+
+        List<Product> products = productService.getAllProducts();
+
+        products.forEach(e -> result
+                .append("<li><a href='/product?productId=")
                 .append(e.getId())
                 .append("'>")
                 .append(e.getTitle())
                 .append("</a>")
-                .append("<form method='POST' action='/cart/products'>")
+                .append("<form method='POST' action='/cart/action/add'>")
                 .append("<input type='hidden' name='productId' value='")
                 .append(e.getId())
                 .append("'>")
@@ -46,10 +50,13 @@ public class MainPageServlet extends HttpServlet {
         );
 
         result.append("</ul>")
-                .append("<a href='/cart/'>Cart Items:")
+                .append("<a href='/cart'>Cart Items:")
                 .append(CartServlet.cart.size())
                 .append("</a>")
                 .append("</ul></body></html>");
         return result.toString();
     }
+
+
+
 }

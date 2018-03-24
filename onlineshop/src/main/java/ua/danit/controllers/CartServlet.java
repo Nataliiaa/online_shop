@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet (name = "cartServlet", urlPatterns = "/cart/")
+@WebServlet (name = "cartServlet", urlPatterns = "/cart")
 public class CartServlet extends HttpServlet {
 
     public static List<Product> cart = new ArrayList<>();
@@ -43,7 +43,7 @@ public class CartServlet extends HttpServlet {
         result.append("</ul><p>")
                 .append("<p>Total cost: $")
                 .append(totalCost)
-                .append("</p><p><form action='/cart/order/'><button type='submit'>Buy Now</button></form></p>")
+                .append("</p><p><form action='/cart/order'><button type='submit'>Buy Now</button></form></p>")
                 .append("<p><a href='/'>&lt; home page</a></p></body></html>");
         return result.toString();
     }
