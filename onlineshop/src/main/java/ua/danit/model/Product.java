@@ -11,10 +11,10 @@ public class Product {
     private final String description;
     private final String imageUrl;
     private final int price;
+    private final List<Comment> comments;
 
     private static Long nextId = 0L;
 
-    private List<Comment> comments;
 
     public Product(String title, String description, String imageUrl, int price) {
         this.id = nextId++;

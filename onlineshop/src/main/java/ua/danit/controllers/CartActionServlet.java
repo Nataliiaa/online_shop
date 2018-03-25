@@ -37,10 +37,6 @@ public class CartActionServlet extends HttpServlet {
             CartServlet.removeAllFromCart();
         }
 
-        if (Actions.ORDER.getAction().equals(action)) {
-            CartServlet.removeAllFromCart();
-        }
-
         String referer = req.getHeader("Referer");
 
         if (referer != null && !referer.isEmpty()) {
@@ -57,7 +53,7 @@ public class CartActionServlet extends HttpServlet {
 
 
     private enum Actions {
-        ADD("/add"), REMOVE("/remove"), REMOVEALL("/removeall"), ORDER("/order");
+        ADD("/add"), REMOVE("/remove"), REMOVEALL("/removeall");
 
         Actions(String action) {
             this.action = action;

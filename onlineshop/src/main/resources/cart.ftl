@@ -92,7 +92,7 @@
                     <div class="col-2"><button type="button" class="btn btn-danger" onclick="window.location.href='/cart/action/removeall'">Empty Cart</button></div>
             </div>
             <div class="w-100 my-3 mx-auto">
-                <button type="button" class="btn btn-success float-right" onclick="window.location.href='/cart/action/order'">Make Order</button>
+                <button type="button" class="btn btn-success float-right" onclick="window.location.href='/order'">Make Order</button>
             </div>
         </#if>
 

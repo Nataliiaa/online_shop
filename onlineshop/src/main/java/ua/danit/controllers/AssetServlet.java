@@ -28,7 +28,7 @@ public class AssetServlet extends HttpServlet {
             resp.setContentType(mimeType);
             resp.getWriter().write(Files.toString(file, Charset.defaultCharset()));
         } else {
-            resp.getWriter().write("Can't find file" + path);
+            resp.getWriter().write("Can't find file = " + path);
         }
     }
 }
