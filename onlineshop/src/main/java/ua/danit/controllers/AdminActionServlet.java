@@ -22,7 +22,6 @@ import static ua.danit.service.TemplateLoader.TEMPLATE_LOADER;
 public class AdminActionServlet extends HttpServlet {
 
     private final ProductService productService = PRODUCT_SERVICE;
-    private final TemplateLoader templateLoader = TEMPLATE_LOADER;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,10 +36,16 @@ public class AdminActionServlet extends HttpServlet {
             String title = req.getParameter("productTitle");
             String description = req.getParameter("productDescription");
             String imageUrl = req.getParameter("productImageUrl");
-            String productPrice = req.getParameter("productPrice");
-            int price = (productPrice.isEmpty()) ? 0 : Integer.parseInt(productPrice);
-            Category category = Category.valueOf(req.getParameter("productCategory"));
+            int price = 0;
 
+            try {
+                price = Integer.parseInt(req.getParameter("productPrice"));
+            } catch (NumberFormatException e) {
+                String errorMessage = "Product Price must be a valid number";
+                resp.sendError(400, errorMessage);
+            }
+
+            Category category = Category.valueOf(req.getParameter("productCategory"));
             productService.add(new Product(title, description, imageUrl, price), category);
         }
 

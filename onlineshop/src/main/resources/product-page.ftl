@@ -28,7 +28,7 @@
                     <ul class="list-unstyled">
                         <li><a href="/" class="text-white">All Products</a></li>
                                 <#list categories as category>
-                                    <li><a href="/category?category=${category}" class="text-white">${category.getTitle()}</a></li>
+                                    <li><a href="/category?category=${category}" class="text-white">${category.title}</a></li>
                                 </#list>
                     </ul>
                 </div>
@@ -54,30 +54,31 @@
 <main role="main">
     <section class="jumbotron text-center">
         <div class="container">
-            <h1 class="jumbotron-heading">${product.getTitle()}</h1>
+            <h1 class="jumbotron-heading">${product.title}</h1>
         </div>
     </section>
     <div class="container">
-        <img src="${product.getImageUrl()}" alt="${product.getTitle()}">
-        <p>${product.getDescription()}</p>
-        <p>$${product.getPrice()}</p>
+        <img src="${product.imageUrl}" alt="${product.title}">
+        <p>${product.description}</p>
+        <p>$${product.price}</p>
         <p>
-            <button type="button" class="btn btn-primary" onclick="window.location.href='/cart/action/add?productId=${product.getId()}'">
-                Add To Cart
-            </button>
+            <form action="/cart/action/add" method="post">
+                <input type="hidden" name="productId" value="${product.id}">
+                <button type="submit" class="btn btn-primary">Add To Cart</button>
+            </form>
         </p>
         <h3>Comments</h3>
-        <#list product.getComments() as comment>
+        <#list product.comments as comment>
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">${comment.getRating()}<span class="text-warning">&#9733;</span></h5>
-                    <p class="card-text">${comment.getText()}</p>
-                    <p class="card-title">Author: ${comment.getAuthor()}</p>
+                    <h5 class="card-title">${comment.rating}<span class="text-warning">&#9733;</span></h5>
+                    <p class="card-text">${comment.text}</p>
+                    <p class="card-title">Author: ${comment.author}</p>
                 </div>
             </div>
         </#list>
         <form action="/comment/action/add" method="post">
-            <input type="hidden" name="productId" value="${product.getId()}">
+            <input type="hidden" name="productId" value="${product.id}">
             <div class="form-group">
                 <label for="commentAuthor">Your name</label>
                 <input type="text" name="commentAuthor" class="form-control" id="commentAuthor">

@@ -20,7 +20,7 @@ public class CartActionServlet extends HttpServlet {
     private final ProductService productService = PRODUCT_SERVICE;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getPathInfo();
 
         if (Actions.ADD.getAction().equals(action)) {

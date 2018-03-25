@@ -28,7 +28,7 @@
                     <ul class="list-unstyled">
                         <li><a href="/" class="text-white">All Products</a></li>
                                 <#list categories as category>
-                                    <li><a href="/category?category=${category}" class="text-white">${category.getTitle()}</a></li>
+                                    <li><a href="/category?category=${category}" class="text-white">${category.title}</a></li>
                                 </#list>
                     </ul>
                 </div>
@@ -64,17 +64,17 @@
                 </div>
                 <div class="form-group">
                     <label for="productImageUrl">Product Image URL</label>
-                    <input type="text" name="productImageUrl" class="form-control" id="productImageUrl">
+                    <input type="text" name="productImageUrl" class="form-control" id="productImageUrl" placeholder="http://...">
                 </div>
                 <div class="form-group">
                     <label for="productPrice">Product Price</label>
-                    <input type="text" name="productPrice" class="form-control" id="productPrice">
+                    <input type="number" name="productPrice" class="form-control" id="productPrice" value="0">
                 </div>
                 <div class="form-group">
                     <label for="productCategory">Product Category</label><br>
                     <select name="productCategory">
                         <#list categories as category>
-                            <option value="${category}">${category.getTitle()}</option>
+                            <option value="${category}">${category.title}</option>
                         </#list>
                     </select>
                 </div>
@@ -94,19 +94,19 @@
                         <#list products as product>
                             <div class="col-md-4">
                                 <div class="card mb-4 box-shadow">
-                                    <img class="card-img-top clickable" src="${product.getImageUrl()}" alt="${product.getTitle()}" onclick="window.location.href='/product?productId=${product.getId()}'">
+                                    <img class="card-img-top clickable" src="${product.imageUrl}" alt="${product.title}" onclick="window.location.href='/product?productId=${product.id}'">
                                     <div class="card-body">
-                                        <p class="card-text">${product.getTitle()}</p>
+                                        <p class="card-text">${product.title}</p>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="btn-group">
-                                                <button type="button" class="btn btn-sm btn-outline-secondary" onclick="window.location.href='/product?productId=${product.getId()}'">View</button>
+                                                <button type="button" class="btn btn-sm btn-outline-secondary" onclick="window.location.href='/product?productId=${product.id}'">View</button>
                                                 <form action="/admin/action/remove" method="post">
-                                                    <input type="hidden" name="productId" value="${product.getId()}">
+                                                    <input type="hidden" name="productId" value="${product.id}">
                                                     <button type="submit" class="btn btn-sm btn-warning">Remove</button>
                                                 </form>
 
                                             </div>
-                                            <small class="text-muted">$${product.getPrice()}</small>
+                                            <small class="text-muted">$${product.price}</small>
                                         </div>
                                     </div>
                                 </div>

@@ -29,7 +29,7 @@
                     <ul class="list-unstyled">
                         <li><a href="/" class="text-white">All Products</a></li>
                                 <#list categories as category>
-                                    <li><a href="/category?category=${category}" class="text-white">${category.getTitle()}</a></li>
+                                    <li><a href="/category?category=${category}" class="text-white">${category.title}</a></li>
                                 </#list>
                     </ul>
                 </div>
@@ -59,7 +59,7 @@
             <h3>Your Shopping Cart is empty.</h3>
             <p>Your Shopping Cart lives to serve. Give it purpose &mdash; fill it with
                 <#list categories as category>
-                                    <a href="/category?category=${category}">${category.getTitle()}</a>,
+                    <a href="/category?category=${category}">${category.title}</a>,
                 </#list>
                  and more.
                 Continue shopping on the <a href="/">DanITShop.com homepage</a>.</p>
@@ -67,29 +67,36 @@
             <h3>Shopping Cart</h3>
             <div class="row row-heading">
                 <div class="col-5">Item</div>
-                <div class="col-2">Price</div>
-                <div class="col-1">Qty</div>
-                <div class="col-2">Subtotal</div>
-                <div class="col-2">Actions</div>
+                <div class="col-2 text-right">Price</div>
+                <div class="col-1 text-right">Qty</div>
+                <div class="col-2 text-right">Subtotal</div>
+                <div class="col-2 text-right">Actions</div>
             </div>
 
             <#list cart as entry>
                 <div class="row">
-                    <div class="col-5"><a href="#" onclick="window.location.href='/product?productId=${entry.key.getId()}'">${entry.key.getTitle()}</a></div>
-                    <div class="col-2">${entry.key.getPrice()}</div>
-                    <div class="col-1">${entry.value}</div>
-                    <div class="col-2">$${entry.key.getPrice() * entry.value}</div>
-                    <div class="col-2">
-                        <button type="button" class="btn btn-danger" onclick="window.location.href='/cart/action/remove?productId=${entry.key.getId()}'">Remove</button>
+                    <div class="col-5"><a href="/product?productId=${entry.key.id}">${entry.key.title}</a></div>
+                    <div class="col-2 text-right">$${entry.key.price}</div>
+                    <div class="col-1 text-right">${entry.value}</div>
+                    <div class="col-2 text-right">$${entry.key.price * entry.value}</div>
+                    <div class="col-2 text-right">
+                        <form action="/cart/action/remove" method="post">
+                            <input type="hidden" name="productId" value="${entry.key.id}">
+                            <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                        </form>
                     </div>
                 </div>
             </#list>
 
             <div class="row">
                     <div class="col-5">Total</div>
-                    <div class="col-3"></div>
-                    <div class="col-2">$${cartTotal}</div>
-                    <div class="col-2"><button type="button" class="btn btn-danger" onclick="window.location.href='/cart/action/removeall'">Empty Cart</button></div>
+                    <div class="col-3 text-right"></div>
+                    <div class="col-2 text-right">$${cartTotal}</div>
+                    <div class="col-2 text-right">
+                        <form action="/cart/action/removeall" method="post">
+                            <button type="submit" class="btn btn-sm btn-danger">Empty Cart</button>
+                        </form>
+                    </div>
             </div>
             <div class="w-100 my-3 mx-auto">
                 <button type="button" class="btn btn-success float-right" onclick="window.location.href='/order'">Make Order</button>
