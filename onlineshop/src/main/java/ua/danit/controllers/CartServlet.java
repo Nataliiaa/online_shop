@@ -16,16 +16,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
+import static ua.danit.service.TemplateLoader.TEMPLATE_LOADER;
+
 @WebServlet (name = "cartServlet", urlPatterns = "/cart")
 public class CartServlet extends HttpServlet {
 
     public static Map<Product, Integer> cart = new HashMap<>();
     public static int cartTotal = 0;
 
+
+    private final TemplateLoader templateLoader = TEMPLATE_LOADER;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter out = resp.getWriter();
-        TemplateLoader templateLoader = new TemplateLoader();
         templateLoader.write("cart.ftl", out, ImmutableMap.of(
                 "cartSize", getItemsCount(),
                 "categories", Category.values(),

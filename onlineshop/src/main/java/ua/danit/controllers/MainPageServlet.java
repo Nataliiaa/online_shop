@@ -16,11 +16,13 @@ import java.io.PrintWriter;
 import java.util.*;
 
 import static ua.danit.service.ProductService.PRODUCT_SERVICE;
+import static ua.danit.service.TemplateLoader.TEMPLATE_LOADER;
 
 @WebServlet(name = "mainServlet", urlPatterns = "/", loadOnStartup = 1)
 public class MainPageServlet extends HttpServlet {
 
     private final ProductService productService = PRODUCT_SERVICE;
+    private final TemplateLoader templateLoader = TEMPLATE_LOADER;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,7 +40,6 @@ public class MainPageServlet extends HttpServlet {
         }
 
         PrintWriter out = resp.getWriter();
-        TemplateLoader templateLoader = new TemplateLoader();
         templateLoader.write("products.ftl", out, ImmutableMap.of(
                 "cartSize", CartServlet.getItemsCount(),
                 "categories", Category.values(),

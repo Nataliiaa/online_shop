@@ -14,6 +14,8 @@ import static freemarker.template.Configuration.VERSION_2_3_21;
 
 public class TemplateLoader {
 
+    public static final TemplateLoader TEMPLATE_LOADER = new TemplateLoader();
+
     public Template getTemplate(String name) throws IOException {
         Configuration config = new Configuration(VERSION_2_3_21);
         URL resource = getClass().getClassLoader().getResource(".");

@@ -12,6 +12,7 @@
 
     <!-- Custom styles for this template -->
     <link href="https://getbootstrap.com/docs/4.0/examples/album/album.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/4.0/examples/grid/grid.css" rel="stylesheet">
     <link href="/assets/css/corrections.css" rel="stylesheet">
 </head>
 <body>
@@ -52,53 +53,44 @@
 </header>
 
 <main role="main">
-    <section class="jumbotron text-center">
-        <div class="container">
-            <h1 class="jumbotron-heading">${product.getTitle()}</h1>
-        </div>
-    </section>
     <div class="container">
-        <img src="${product.getImageUrl()}" alt="${product.getTitle()}">
-        <p>${product.getDescription()}</p>
-        <p>$${product.getPrice()}</p>
-        <p>
-            <button type="button" class="btn btn-primary" onclick="window.location.href='/cart/action/add?productId=${product.getId()}'">
-                Add To Cart
-            </button>
-        </p>
-        <h3>Comments</h3>
-        <#list product.getComments() as comment>
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">${comment.getRating()}<span class="text-warning">&#9733;</span></h5>
-                    <p class="card-text">${comment.getText()}</p>
-                    <p class="card-title">Author: ${comment.getAuthor()}</p>
+
+        <#if emptyCart>
+            <h3>Your Shopping Cart is empty.</h3>
+            <p>Your Shopping Cart lives to serve. Give it purpose — fill it with
+                <#list categories as category>
+                                    <a href="/category?category=${category}">${category.getTitle()}</a>,
+                </#list>
+                and more.
+                Continue shopping on the <a href="/">DanITShop.com homepage</a>.</p>
+        <#else>
+            <h3>Shopping Cart</h3>
+            <div class="row row-heading">
+                <div class="col-5">Item</div>
+                <div class="col-2">Price</div>
+                <div class="col-1">Qty</div>
+                <div class="col-2">Subtotal</div>
+                <div class="col-2">Actions</div>
+            </div>
+            <#list cart as entry>
+                <div class="row">
+                    <div class="col-5"><a href="#" onclick="window.location.href='/product?productId=${entry.key.getId()}'">${entry.key.getTitle()}</a></div>
+                    <div class="col-2">${entry.key.getPrice()}</div>
+                    <div class="col-1">${entry.value}</div>
+                    <div class="col-2">$${entry.key.getPrice() * entry.value}</div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-danger" onclick="window.location.href='/cart/action/remove?productId=${entry.key.getId()}'">Remove</button>
+                    </div>
                 </div>
-            </div>
-        </#list>
-        <form action="/comment/action/add" method="post">
-            <input type="hidden" name="productId" value="${product.getId()}">
-            <div class="form-group">
-                <label for="commentAuthor">Your name</label>
-                <input type="text" name="commentAuthor" class="form-control" id="commentAuthor">
-            </div>
-            <div class="form-group">
-                <label for="commentRating">Product Rating</label><br>
-                <select name="commentRating">
-                    <option value="5" selected="selected">5</option>
-                    <option value="4">4</option>
-                    <option value="3">3</option>
-                    <option value="2">2</option>
-                    <option value="1">1</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="commentText">Comment</label>
-                <textarea name="commentText" class="form-control" rows="3" id="commentText"></textarea>
-            </div>
-            <button type="submit" class="btn btn-sm btn-outline-secondary">Add Comment</button>
-        </form>
-    </div>
+            </#list>
+                <div class="row">
+                    <div class="col-5">Total</div>
+                    <div class="col-3"></div>
+                    <div class="col-2">$${cartTotal}</div>
+                    <div class="col-2"><button type="button" class="btn btn-danger" onclick="window.location.href='/cart/action/removeall'">Empty Cart</button></div>
+                </div>
+        </#if>
+
 </main>
 
 <footer class="text-muted">
