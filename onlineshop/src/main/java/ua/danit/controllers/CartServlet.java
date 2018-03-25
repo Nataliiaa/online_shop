@@ -24,7 +24,6 @@ public class CartServlet extends HttpServlet {
     public static Map<Product, Integer> cart = new HashMap<>();
     public static int cartTotal = 0;
 
-
     private final TemplateLoader templateLoader = TEMPLATE_LOADER;
 
     @Override

@@ -91,23 +91,38 @@ public class ProductMockDaoImpl implements ProductDao {
 
     @Override
     public void remove(Long id) {
-        /*Map<Category, List<Product>> allProducts = getAll();
-        Product product;
+
+        Map<Category, List<Product>> allProducts = getAll();
+        Product product = getProductById(id);
 
         allProducts.forEach(
                 (Category k, List<Product> v) -> v.removeAll(
                         Collections.singleton(product)
                 )
-        );*/
-
-        /*allProducts.forEach(
-                (k, v) -> v.removeIf(
-                        e -> {
-                            return e.getId().equals(id);
-                        }
-                )
-        );*/
+        );
     }
 
+    @Override
+    public Product getProductById(Long id){
+        List<Product> products = getAllProducts();
+        for (Product product : products) {
+            if(id.equals(product.getId())){
+                return product;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<Product> getAllProducts(){
+        List<Product> result = new ArrayList<>();
+        Map<Category, List<Product>> productsByCategories = getAll();
+        if(productsByCategories != null && productsByCategories.size() > 0){
+            for (Map.Entry<Category, List<Product>> entry : productsByCategories.entrySet()) {
+                result.addAll(entry.getValue());
+            }
+        }
+        return result;
+    }
 
 }

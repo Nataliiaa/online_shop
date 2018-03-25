@@ -12,5 +12,7 @@ public interface ProductDao {
     List<Product> getByCategory(Category category);
     void add (Product product, Category category);
     void remove (Long productId);
+    Product getProductById(Long id);
+    List<Product> getAllProducts();
 
 }

@@ -1,5 +1,6 @@
 package ua.danit.service;
 
+import ua.danit.controllers.CartServlet;
 import ua.danit.dao.ProductDao;
 import ua.danit.dao.ProductMockDaoImpl;
 import ua.danit.model.Category;
@@ -26,24 +27,11 @@ public class ProductService {
     }
 
     public List<Product> getAllProducts(){
-        List<Product> result = new ArrayList<>();
-        Map<Category, List<Product>> productsByCategories = productDao.getAll();
-        if(productsByCategories != null && productsByCategories.size() > 0){
-            for (Map.Entry<Category, List<Product>> entry : productsByCategories.entrySet()) {
-                result.addAll(entry.getValue());
-            }
-        }
-        return result;
+        return productDao.getAllProducts();
     }
 
     public Product getProductById(Long id){
-        List<Product> products = getAllProducts();
-        for (Product product : products) {
-            if(id.equals(product.getId())){
-                return product;
-            }
-        }
-        return null;
+        return productDao.getProductById(id);
     }
 
     public void add(Product product, Category category) {
@@ -51,19 +39,9 @@ public class ProductService {
     }
 
     public void remove(Long id) {
-        //productDao.getAll().values().removeIf(val -> getProductById(id).equals(val));
-        //productDao.getAll().values().removeAll(Collections.singleton(getProductById(id)));
-        //productDao.remove(id);
-
-        Map<Category, List<Product>> allProducts = getProductsByCategories();
-        Product product = getProductById(id);
-
-        allProducts.forEach(
-                (Category k, List<Product> v) -> v.removeAll(
-                        Collections.singleton(product)
-                )
-        );
-
+        Product product = productDao.getProductById(id);
+        CartServlet.removeProductFromCart(product);
+        productDao.remove(id);
     }
 
 }
