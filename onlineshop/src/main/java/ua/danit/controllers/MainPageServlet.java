@@ -40,7 +40,7 @@ public class MainPageServlet extends HttpServlet {
         }
 
         PrintWriter out = resp.getWriter();
-        templateLoader.write("products.ftl", out, ImmutableMap.of(
+        templateLoader.write("main.ftl", out, ImmutableMap.of(
                 "cartSize", CartServlet.getItemsCount(),
                 "categories", Category.values(),
                 "products", products,
