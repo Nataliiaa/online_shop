@@ -72,6 +72,7 @@
                 <div class="col-2">Subtotal</div>
                 <div class="col-2">Actions</div>
             </div>
+
             <#list cart as entry>
                 <div class="row">
                     <div class="col-5"><a href="#" onclick="window.location.href='/product?productId=${entry.key.getId()}'">${entry.key.getTitle()}</a></div>
@@ -83,21 +84,22 @@
                     </div>
                 </div>
             </#list>
-                <div class="row">
+
+            <div class="row">
                     <div class="col-5">Total</div>
                     <div class="col-3"></div>
                     <div class="col-2">$${cartTotal}</div>
                     <div class="col-2"><button type="button" class="btn btn-danger" onclick="window.location.href='/cart/action/removeall'">Empty Cart</button></div>
-                </div>
+            </div>
+            <div class="w-100 my-3 mx-auto">
+                <button type="button" class="btn btn-success float-right" onclick="window.location.href='/cart/action/order'">Make Order</button>
+            </div>
         </#if>
 
 </main>
 
 <footer class="text-muted">
     <div class="container">
-        <p class="float-right">
-            <a href="#">Back to top</a>
-        </p>
     </div>
 </footer>
 
