@@ -81,6 +81,10 @@
                         </div>
                         </#list>
                     </div>
+
+                    <#if noProducts>
+                        <h4>There are no products in this category.</h4>
+                    </#if>
                 </div>
             </div>
 

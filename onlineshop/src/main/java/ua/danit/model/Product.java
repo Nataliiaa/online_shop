@@ -2,6 +2,7 @@ package ua.danit.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Product {
 
@@ -11,10 +12,12 @@ public class Product {
     private final String imageUrl;
     private final int price;
 
+    private static Long nextId = 0L;
+
     private List<Comment> comments;
 
-    public Product(Long id, String title, String description, String imageUrl, int price) {
-        this.id = id;
+    public Product(String title, String description, String imageUrl, int price) {
+        this.id = nextId++;
         this.title = title;
         this.description = description;
         this.imageUrl = imageUrl;
@@ -51,7 +54,15 @@ public class Product {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(id, product.id);
+    }
+
+    @Override
     public int hashCode() {
-        return id.hashCode();
+        return Objects.hash(id);
     }
 }

@@ -15,6 +15,10 @@ body {
     font-weight: bold;
 }
 
+#navbarHeader .row div {
+    background: #343a40!important;
+}
+
 .clickable {
     cursor: pointer;
 }

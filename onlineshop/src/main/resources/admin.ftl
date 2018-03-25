@@ -12,7 +12,6 @@
 
     <!-- Custom styles for this template -->
     <link href="https://getbootstrap.com/docs/4.0/examples/album/album.css" rel="stylesheet">
-    <link href="https://getbootstrap.com/docs/4.0/examples/grid/grid.css" rel="stylesheet">
     <link href="/assets/css/corrections.css" rel="stylesheet">
 </head>
 <body>
@@ -53,43 +52,69 @@
 </header>
 
 <main role="main">
-    <div class="container">
 
-        <#if emptyCart>
-            <h3>Your Shopping Cart is empty.</h3>
-            <p>Your Shopping Cart lives to serve. Give it purpose — fill it with
-                <#list categories as category>
-                                    <a href="/category?category=${category}">${category.getTitle()}</a>,
-                </#list>
-                and more.
-                Continue shopping on the <a href="/">DanITShop.com homepage</a>.</p>
-        <#else>
-            <h3>Shopping Cart</h3>
-            <div class="row row-heading">
-                <div class="col-5">Item</div>
-                <div class="col-2">Price</div>
-                <div class="col-1">Qty</div>
-                <div class="col-2">Subtotal</div>
-                <div class="col-2">Actions</div>
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Admin</h1>
+            <h2>Add Product</h2>
+            <form action="/admin/action/add" method="post">
+                <div class="form-group">
+                    <label for="productTitle">Product Title</label>
+                    <input type="text" name="productTitle" class="form-control" id="productTitle">
+                </div>
+                <div class="form-group">
+                    <label for="productImageUrl">Product Image URL</label>
+                    <input type="text" name="productImageUrl" class="form-control" id="productImageUrl">
+                </div>
+                <div class="form-group">
+                    <label for="productPrice">Product Price</label>
+                    <input type="text" name="productPrice" class="form-control" id="productPrice">
+                </div>
+                <div class="form-group">
+                    <label for="productCategory">Product Category</label><br>
+                    <select name="productCategory">
+                        <#list categories as category>
+                            <option value="${category}">${category.getTitle()}</option>
+                        </#list>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="productDescription">Comment</label>
+                    <textarea name="productDescription" class="form-control" rows="3" id="productDescription"></textarea>
+                </div>
+                <button type="submit" class="btn btn-sm btn-outline-secondary">Add Product</button>
+            </form>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+
+            <div class="row">
+                        <#list products as product>
+                            <div class="col-md-4">
+                                <div class="card mb-4 box-shadow">
+                                    <img class="card-img-top clickable" src="${product.getImageUrl()}" alt="${product.getTitle()}" onclick="window.location.href='/product?productId=${product.getId()}'">
+                                    <div class="card-body">
+                                        <p class="card-text">${product.getTitle()}</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary" onclick="window.location.href='/product?productId=${product.getId()}'">View</button>
+                                                <form action="/admin/action/remove" method="post">
+                                                    <input type="hidden" name="productId" value="${product.getId()}">
+                                                    <button type="submit" class="btn btn-sm btn-warning">Remove</button>
+                                                </form>
+
+                                            </div>
+                                            <small class="text-muted">$${product.getPrice()}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </#list>
             </div>
-            <#list cart as entry>
-                <div class="row">
-                    <div class="col-5"><a href="#" onclick="window.location.href='/product?productId=${entry.key.getId()}'">${entry.key.getTitle()}</a></div>
-                    <div class="col-2">${entry.key.getPrice()}</div>
-                    <div class="col-1">${entry.value}</div>
-                    <div class="col-2">$${entry.key.getPrice() * entry.value}</div>
-                    <div class="col-2">
-                        <button type="button" class="btn btn-danger" onclick="window.location.href='/cart/action/remove?productId=${entry.key.getId()}'">Remove</button>
-                    </div>
-                </div>
-            </#list>
-                <div class="row">
-                    <div class="col-5">Total</div>
-                    <div class="col-3"></div>
-                    <div class="col-2">$${cartTotal}</div>
-                    <div class="col-2"><button type="button" class="btn btn-danger" onclick="window.location.href='/cart/action/removeall'">Empty Cart</button></div>
-                </div>
-        </#if>
+        </div>
+    </div>
 
 </main>
 

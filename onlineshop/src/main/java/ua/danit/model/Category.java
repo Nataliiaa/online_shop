@@ -2,6 +2,7 @@ package ua.danit.model;
 
 public enum Category {
 
+    nocategory("No category"),
     computer("Computers"),
     mobile("Mobile Phones"),
     book("Books");

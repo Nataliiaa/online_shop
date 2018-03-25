@@ -57,7 +57,7 @@
 
         <#if emptyCart>
             <h3>Your Shopping Cart is empty.</h3>
-            <p>Your Shopping Cart lives to serve. Give it purpose — fill it with
+            <p>Your Shopping Cart lives to serve. Give it purpose &mdash; fill it with
                 <#list categories as category>
                                     <a href="/category?category=${category}">${category.getTitle()}</a>,
                 </#list>

@@ -18,7 +18,7 @@ import java.util.*;
 import static ua.danit.service.ProductService.PRODUCT_SERVICE;
 import static ua.danit.service.TemplateLoader.TEMPLATE_LOADER;
 
-@WebServlet(name = "mainServlet", urlPatterns = "/", loadOnStartup = 1)
+@WebServlet(name = "mainServlet", urlPatterns = {"/", "/category"}, loadOnStartup = 1)
 public class MainPageServlet extends HttpServlet {
 
     private final ProductService productService = PRODUCT_SERVICE;
@@ -44,6 +44,7 @@ public class MainPageServlet extends HttpServlet {
                 "cartSize", CartServlet.getItemsCount(),
                 "categories", Category.values(),
                 "products", products,
+                "noProducts", products.isEmpty(),
                 "currentCategory", currentCategory
         ));
     }

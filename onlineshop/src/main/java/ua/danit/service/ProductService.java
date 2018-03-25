@@ -5,10 +5,7 @@ import ua.danit.dao.ProductMockDaoImpl;
 import ua.danit.model.Category;
 import ua.danit.model.Product;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class ProductService {
 
@@ -47,6 +44,26 @@ public class ProductService {
             }
         }
         return null;
+    }
+
+    public void add(Product product, Category category) {
+        productDao.add(product, category);
+    }
+
+    public void remove(Long id) {
+        //productDao.getAll().values().removeIf(val -> getProductById(id).equals(val));
+        //productDao.getAll().values().removeAll(Collections.singleton(getProductById(id)));
+        //productDao.remove(id);
+
+        Map<Category, List<Product>> allProducts = getProductsByCategories();
+        Product product = getProductById(id);
+
+        allProducts.forEach(
+                (Category k, List<Product> v) -> v.removeAll(
+                        Collections.singleton(product)
+                )
+        );
+
     }
 
 }
