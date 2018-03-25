@@ -14,17 +14,16 @@
 <div class="container">
     <h1>Products</h1>
     <div id="productContainer"></div>
+    <div style="padding-top: 20px;">
+        <h4><a href="/cart" class="badge badge-success">Cart</a></h4>
+    </div>
 </div>
 </body>
 <script id="productTemplate" type="text/x-jQuery-tmpl">
     <div style="padding-top: 20px;">
     <i style="padding-right: 20px">${title}</i>
-        <form action="/cart/products" method="POST" style="display: inline">
-        <input type="hidden" name="productId" value="${id}">
-        <button class="btn btn-primary" type="submit">Add to Cart</button>
-    </form>
+    <button type="button" class="btn btn-primary" onclick="window.location.href='/cart/action/add?productId=${id}'">Add To Cart</button>
     </div>
-
 </script>
 <script>
     $(document).ready(function () {
