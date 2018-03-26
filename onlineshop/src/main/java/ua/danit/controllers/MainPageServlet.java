@@ -18,7 +18,7 @@ import java.util.*;
 import static ua.danit.service.ProductService.PRODUCT_SERVICE;
 import static ua.danit.service.TemplateLoader.TEMPLATE_LOADER;
 
-@WebServlet(name = "mainServlet", urlPatterns = {"/", "/category"}, loadOnStartup = 1)
+@WebServlet(name = "mainServlet", urlPatterns = {"/"}, loadOnStartup = 1)
 public class MainPageServlet extends HttpServlet {
 
     private final ProductService productService = PRODUCT_SERVICE;
@@ -26,6 +26,9 @@ public class MainPageServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        //TODO: change when we implement authorization
+        boolean isAdmin = "true".equals(req.getParameter("admin"));
 
         String category = req.getParameter("category");
         List<Product> products;
@@ -35,17 +38,20 @@ public class MainPageServlet extends HttpServlet {
             products = productService.getAllProducts();
             currentCategory = "All Products";
         } else {
-            products = productService.getProductByCategory(Category.valueOf(category));
-            currentCategory = Category.valueOf(category).getTitle();
+            Category selectedCategory = Category.getCategoryByTitle(category);
+            products = productService.getProductByCategory(selectedCategory);
+            currentCategory = selectedCategory.getTitle();
         }
 
         PrintWriter out = resp.getWriter();
-        templateLoader.write("main.ftl", out, ImmutableMap.of(
-                "cartSize", CartServlet.getItemsCount(),
-                "categories", Category.values(),
-                "products", products,
-                "noProducts", products.isEmpty(),
-                "currentCategory", currentCategory
-        ));
+        templateLoader.write("main.ftl", out, ImmutableMap.builder()
+                .put("cartSize", CartServlet.getItemsCount())
+                .put("categories", Category.values())
+                .put("products", products)
+                .put("noProducts", products.isEmpty())
+                .put("currentCategory", currentCategory)
+                .put("isAdmin", isAdmin)
+                .build()
+        );
     }
 }

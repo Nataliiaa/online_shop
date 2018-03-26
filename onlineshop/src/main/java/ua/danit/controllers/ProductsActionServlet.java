@@ -1,10 +1,9 @@
 package ua.danit.controllers;
 
-import com.google.common.collect.ImmutableMap;
+import ua.danit.model.Actions;
 import ua.danit.model.Category;
 import ua.danit.model.Product;
 import ua.danit.service.ProductService;
-import ua.danit.service.TemplateLoader;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,14 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 
 import static ua.danit.service.ProductService.PRODUCT_SERVICE;
-import static ua.danit.service.TemplateLoader.TEMPLATE_LOADER;
 
-@WebServlet(urlPatterns = "/admin/action/*", name = "adminActionServlet")
-public class AdminActionServlet extends HttpServlet {
+@WebServlet (urlPatterns = "/product/action/*", name = "productsActionServlet")
+public class ProductsActionServlet extends HttpServlet {
 
     private final ProductService productService = PRODUCT_SERVICE;
 
@@ -27,12 +23,14 @@ public class AdminActionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getPathInfo();
 
-        if (Actions.REMOVE.action.equals(action)) {
+        if (Actions.REMOVE.getAction().equals(action)) {
             Long productId = Long.parseLong(req.getParameter("productId"));
+            Product product = productService.getProductById(productId);
+            CartServlet.removeProductFromCart(product);
             productService.remove(productId);
         }
 
-        if (Actions.ADD.action.equals(action)) {
+        if (Actions.ADD.getAction().equals(action)) {
             String title = req.getParameter("productTitle");
             String description = req.getParameter("productDescription");
             String imageUrl = req.getParameter("productImageUrl");
@@ -45,24 +43,10 @@ public class AdminActionServlet extends HttpServlet {
                 resp.sendError(400, errorMessage);
             }
 
-            Category category = Category.valueOf(req.getParameter("productCategory"));
+            Category category = Category.getCategoryByTitle(req.getParameter("productCategory"));
             productService.add(new Product(title, description, imageUrl, price), category);
         }
 
-        resp.sendRedirect("/admin");
-    }
-
-    private enum Actions {
-        ADD("/add"), REMOVE("/remove");
-
-        private String action;
-
-        Actions(String action) {
-            this.action = action;
-        }
-
-        public String getAction() {
-            return action;
-        }
+        resp.sendRedirect("/?admin=true");
     }
 }

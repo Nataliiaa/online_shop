@@ -39,8 +39,6 @@ public class ProductService {
     }
 
     public void remove(Long id) {
-        Product product = productDao.getProductById(id);
-        CartServlet.removeProductFromCart(product);
         productDao.remove(id);
     }
 

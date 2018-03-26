@@ -1,5 +1,6 @@
 package ua.danit.controllers;
 
+import ua.danit.model.Actions;
 import ua.danit.model.Product;
 import ua.danit.service.ProductService;
 
@@ -49,20 +50,5 @@ public class CartActionServlet extends HttpServlet {
     private Product getProductId(HttpServletRequest req) {
         Long productId = Long.valueOf(req.getParameter("productId"));
         return productService.getProductById(productId);
-    }
-
-
-    private enum Actions {
-        ADD("/add"), REMOVE("/remove"), REMOVEALL("/removeall");
-
-        Actions(String action) {
-            this.action = action;
-        }
-
-        private String action;
-
-        public String getAction() {
-            return action;
-        }
     }
 }

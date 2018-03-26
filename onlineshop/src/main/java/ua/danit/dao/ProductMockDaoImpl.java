@@ -4,8 +4,6 @@ import ua.danit.model.Category;
 import ua.danit.model.Product;
 
 import java.util.*;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 public class ProductMockDaoImpl implements ProductDao {
 
@@ -33,7 +31,7 @@ public class ProductMockDaoImpl implements ProductDao {
                 "Phone 7 and iPhone 7 Plus are smartphones designed, developed, and marketed by Apple Inc. They were announced on September 7, 2016, at the Bill Graham Civic Auditorium in San Francisco by Apple CEO Tim Cook, and were released on September 16, 2016, succeeding the iPhone 6S and iPhone 6S Plus as the flagship devices in the iPhone series.",
                 "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/IPhone_7_Plus_Jet_Black.svg/330px-IPhone_7_Plus_Jet_Black.svg.png",
                 800));
-        this.products.put(Category.mobile, mobile);
+        this.products.put(Category.MOBILE, mobile);
 
         ArrayList<Product> computer = new ArrayList<>();
         computer.add(new Product(
@@ -46,7 +44,7 @@ public class ProductMockDaoImpl implements ProductDao {
                 "Zenbook (also known as ZenBook) are a family of ultrabooks – low-bulk laptop computers – produced by Asus. The first Zenbooks were released in October 2011, and the original range of products was amended and expanded during 2012. Models range from 12-inch laptops, featuring power efficient components but lacking connectivity and having only integrated graphics processors, to 15-inch laptops with discrete graphics processing units and optical disc drives. Most (though not all) Zenbooks use Intel Core ultra-low-voltage processors and Nvidia GPUs when integrated graphics are not used. ",
                 "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Asus_x21_ultrabook.jpg/1280px-Asus_x21_ultrabook.jpg",
                 1500));
-        this.products.put(Category.computer, computer);
+        this.products.put(Category.COMPUTER, computer);
 
         ArrayList<Product> book = new ArrayList<>();
         book.add(new Product(
@@ -59,7 +57,7 @@ public class ProductMockDaoImpl implements ProductDao {
                 "Even bad code can function. But if code isn’t clean, it can bring a development organization to its knees. Every year, countless hours and significant resources are lost because of poorly written code. But it doesn’t have to be that way. Noted software expert Robert C. Martin presents a revolutionary paradigm with Clean Code: A Handbook of Agile Software Craftsmanship . Martin has teamed up with his colleagues from Object Mentor to distill their best agile practice of cleaning code “on the fly” into a book that will instill within you the values of a software craftsman and make you a better programmer—but only if you work at it.",
                 "https://images-na.ssl-images-amazon.com/images/I/71QQhJuMlPL.jpg",
                 40));
-        this.products.put(Category.book, book);
+        this.products.put(Category.BOOK, book);
     }
 
     @Override
