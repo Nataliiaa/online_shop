@@ -41,7 +41,7 @@
             <div class="row shopping-cart">
                     <div class="col-5">Total</div>
                     <div class="col-3 text-right"></div>
-                    <div class="col-2 text-right">$${cartTotal}</div>
+                    <div class="col-2 text-right">$${cartTotalPrice}</div>
                     <div class="col-2 text-right">
                         <form action="/cart/action/removeall" method="post">
                             <button type="submit" class="btn btn-sm btn-danger">Empty Cart</button>

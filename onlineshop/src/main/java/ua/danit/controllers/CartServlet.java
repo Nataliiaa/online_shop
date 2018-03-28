@@ -14,15 +14,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
 
 import static ua.danit.service.TemplateLoader.TEMPLATE_LOADER;
 
 @WebServlet (name = "cartServlet", urlPatterns = "/cart")
 public class CartServlet extends HttpServlet {
 
+    // TODO merge CartServlet & CartActionServlet. They are using the same methods.
     public static Map<Product, Integer> cart = new HashMap<>();
-    public static int cartTotal = 0;
+    public static int cartTotalPrice = 0;
 
     private final TemplateLoader templateLoader = TEMPLATE_LOADER;
 
@@ -34,7 +34,7 @@ public class CartServlet extends HttpServlet {
                 "categories", Category.values(),
                 "emptyCart", cart.isEmpty(),
                 "cart", cart.entrySet(),
-                "cartTotal", cartTotal
+                "cartTotalPrice", cartTotalPrice
         ));
     }
 
@@ -45,19 +45,19 @@ public class CartServlet extends HttpServlet {
     public static void addToCart(Product product) {
         Integer productCount = CartServlet.cart.getOrDefault(product, 0);
         cart.put(product, ++productCount);
-        cartTotal += product.getPrice();
+        cartTotalPrice += product.getPrice();
     }
 
     public static void removeProductFromCart(Product product) {
         Integer productCount = CartServlet.cart.getOrDefault(product, 0);
         if (productCount > 0) {
-            cartTotal -= product.getPrice() * productCount;
+            cartTotalPrice -= product.getPrice() * productCount;
             CartServlet.cart.remove(product);
         }
     }
 
     public static void removeAllFromCart() {
         CartServlet.cart = new HashMap<>();
-        cartTotal = 0;
+        cartTotalPrice = 0;
     }
 }

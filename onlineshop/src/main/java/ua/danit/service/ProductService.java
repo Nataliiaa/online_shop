@@ -13,29 +13,25 @@ public class ProductService {
     public static final ProductService PRODUCT_SERVICE = new ProductService();
 
     private ProductService(){
-
     }
 
     private ProductDao productDao = new ProductMockDaoImpl();
 
-    public Map<Category, List<Product>> getProductsByCategories(){
-        return productDao.getAll();
-    }
 
     public List<Product> getProductByCategory(Category category) {
         return productDao.getByCategory(category);
     }
 
-    public List<Product> getAllProducts(){
-        return productDao.getAllProducts();
+    public List<Product> getAll(){
+        return productDao.getAll();
     }
 
     public Product getProductById(Long id){
         return productDao.getProductById(id);
     }
 
-    public void add(Product product, Category category) {
-        productDao.add(product, category);
+    public void add(Product product) {
+        productDao.add(product);
     }
 
     public void remove(Long id) {

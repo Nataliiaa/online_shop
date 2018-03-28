@@ -1,6 +1,7 @@
 package ua.danit.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,11 +14,18 @@ public class Product {
     private final int price;
     private final List<Comment> comments;
 
+    public Category getCategory() {
+        return category;
+    }
+
+    private final Category category;
+
     private static Long nextId = 0L;
 
 
-    public Product(String title, String description, String imageUrl, int price) {
+    public Product(String title, Category category, String description, String imageUrl, int price) {
         this.id = nextId++;
+        this.category = category;
         this.title = title;
         this.description = description;
         this.imageUrl = imageUrl;

@@ -43,7 +43,7 @@ public class ProductsActionServlet extends HttpServlet {
             }
 
             Category category = Category.getCategoryByTitle(req.getParameter("productCategory"));
-            productService.add(new Product(title, description, imageUrl, price), category);
+            productService.add(new Product(title, category, description, imageUrl, price));
         }
 
         resp.sendRedirect("/?admin=true");
