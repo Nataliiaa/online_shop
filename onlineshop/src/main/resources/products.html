@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            crossorigin="anonymous"></script>
+    <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.js"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <h1>Products</h1>
+    <div id="productContainer"></div>
+    <div style="padding-top: 20px;">
+        <h4><a href="/cart" class="badge badge-success">Cart</a></h4>
+    </div>
+</div>
+</body>
+<script id="productTemplate" type="text/x-jQuery-tmpl">
+    <div style="padding-top: 20px;">
+    <i style="padding-right: 20px">${title}</i>
+    <button type="button" class="btn btn-primary" onclick="window.location.href='/cart/action/add?productId=${id}'">Add To Cart</button>
+    </div>
+</script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '/products',
+            type: 'GET',
+            success: function (data) {
+                var products = JSON.parse(data);
+                $("#productTemplate").tmpl(products).appendTo("#productContainer");
+            }
+        });
+    });
+</script>
+</html>

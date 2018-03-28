@@ -1,6 +1,7 @@
 package ua.danit.controllers;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import ua.danit.service.ProductService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,10 +15,12 @@ import static ua.danit.service.ProductService.PRODUCT_SERVICE;
 @WebServlet(name = "productsServlet", urlPatterns = "/products")
 public class ProductsServlet extends HttpServlet {
 
+    private final ProductService productService = PRODUCT_SERVICE;
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(PRODUCT_SERVICE.getAllProducts());
+        String json = mapper.writeValueAsString(productService.getAllProducts());
         response.getWriter().write(json);
     }
-
 }

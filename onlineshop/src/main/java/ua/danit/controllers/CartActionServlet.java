@@ -9,11 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static ua.danit.service.ProductService.PRODUCT_SERVICE;
 
+//TODO: try to concatanate these servlets into one
 @WebServlet(name = "cartActions", urlPatterns = "/cart/action/*")
 public class CartActionServlet extends HttpServlet {
 
@@ -22,25 +21,32 @@ public class CartActionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getPathInfo();
-        Long productId = Long.valueOf(req.getParameter("productId"));
 
-        Product product = productService.getProductById(productId);
-
-        if(Actions.ADD.getAction().equals(action)){
-            CartServlet.cart.add(product);
+        if (Actions.ADD.getAction().equals(action)) {
+            Product product = getProductId(req);
+            CartServlet.addToCart(product);
         }
-        resp.sendRedirect("/");
+
+        if (Actions.REMOVE.getAction().equals(action)) {
+            Product product = getProductId(req);
+            CartServlet.removeProductFromCart(product);
+        }
+
+        if (Actions.REMOVEALL.getAction().equals(action)) {
+            CartServlet.removeAllFromCart();
+        }
+
+        String referer = req.getHeader("Referer");
+
+        if (referer != null && !referer.isEmpty()) {
+            resp.sendRedirect(referer);
+        } else {
+            resp.sendRedirect("/cart");
+        }
     }
 
-
-    private enum Actions{
-        ADD("/add"), REMOVE("/remove");
-        Actions(String action) {
-            this.action = action;
-        }
-        private String action;
-        public String getAction() {
-            return action;
-        }
+    private Product getProductId(HttpServletRequest req) {
+        Long productId = Long.valueOf(req.getParameter("productId"));
+        return productService.getProductById(productId);
     }
 }

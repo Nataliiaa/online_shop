@@ -1,8 +1,10 @@
 package ua.danit.controllers;
 
+import com.google.common.collect.ImmutableMap;
 import ua.danit.model.Category;
 import ua.danit.model.Product;
 import ua.danit.service.ProductService;
+import ua.danit.service.TemplateLoader;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,53 +12,46 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 import static ua.danit.service.ProductService.PRODUCT_SERVICE;
+import static ua.danit.service.TemplateLoader.TEMPLATE_LOADER;
 
-@WebServlet(name = "mainServlet", urlPatterns = "/", loadOnStartup = 1)
+@WebServlet(name = "mainServlet", urlPatterns = {"/"}, loadOnStartup = 1)
 public class MainPageServlet extends HttpServlet {
 
     private final ProductService productService = PRODUCT_SERVICE;
+    private final TemplateLoader templateLoader = TEMPLATE_LOADER;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getOutputStream().print(buildPage());
-        resp.getOutputStream().flush();
-    }
 
-    private String buildPage() {
-        StringBuilder result = new StringBuilder();
-        result.append("<html><link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">")
-                .append("<body>")
-                .append("<h1>Products:</h1><ul>");
+        //TODO: change when we implement authorization
+        boolean isAdmin = "true".equals(req.getParameter("admin"));
 
+        String category = req.getParameter("category");
+        List<Product> products;
+        String currentCategory;
 
-        List<Product> products = productService.getAllProducts();
+        if (category == null) {
+            products = productService.getAllProducts();
+            currentCategory = "All Products";
+        } else {
+            Category selectedCategory = Category.getCategoryByTitle(category);
+            products = productService.getProductByCategory(selectedCategory);
+            currentCategory = selectedCategory.getTitle();
+        }
 
-        products.forEach(e -> result
-                .append("<li><a href='/product?productId=")
-                .append(e.getId())
-                .append("'>")
-                .append(e.getTitle())
-                .append("</a>")
-                .append("<form method='POST' action='/cart/action/add'>")
-                .append("<input type='hidden' name='productId' value='")
-                .append(e.getId())
-                .append("'>")
-                .append("<button type='submit'>Add to Cart</button>")
-                .append("</form>")
-                .append("</li>")
+        PrintWriter out = resp.getWriter();
+        templateLoader.write("main.ftl", out, ImmutableMap.builder()
+                .put("cartSize", CartServlet.getItemsCount())
+                .put("categories", Category.values())
+                .put("products", products)
+                .put("noProducts", products.isEmpty())
+                .put("currentCategory", currentCategory)
+                .put("isAdmin", isAdmin)
+                .build()
         );
-
-        result.append("</ul>")
-                .append("<a href='/cart'>Cart Items:")
-                .append(CartServlet.cart.size())
-                .append("</a>")
-                .append("</ul></body></html>");
-        return result.toString();
     }
-
-
-
 }

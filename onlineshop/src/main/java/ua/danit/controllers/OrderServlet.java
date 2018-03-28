@@ -6,14 +6,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
-@WebServlet (name = "makeOrderServlet", urlPatterns = "/cart/order")
-public class MakeOrderServlet extends HttpServlet {
+@WebServlet (name = "orderServlet", urlPatterns = "/order")
+public class OrderServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CartServlet.cart = new ArrayList<>();
-        resp.sendRedirect("/cart/");
+        CartServlet.removeAllFromCart();
+        resp.sendRedirect("/cart");
     }
 }

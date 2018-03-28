@@ -1,14 +1,12 @@
 package ua.danit.service;
 
+import ua.danit.controllers.CartServlet;
 import ua.danit.dao.ProductDao;
 import ua.danit.dao.ProductMockDaoImpl;
 import ua.danit.model.Category;
 import ua.danit.model.Product;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class ProductService {
 
@@ -29,24 +27,19 @@ public class ProductService {
     }
 
     public List<Product> getAllProducts(){
-        List<Product> result = new ArrayList<>();
-        Map<Category, List<Product>> productsByCategories = productDao.getAll();
-        if(productsByCategories != null && productsByCategories.size() > 0){
-            for (Map.Entry<Category, List<Product>> entry : productsByCategories.entrySet()) {
-                result.addAll(entry.getValue());
-            }
-        }
-        return result;
+        return productDao.getAllProducts();
     }
 
     public Product getProductById(Long id){
-        List<Product> products = getAllProducts();
-        for (Product product : products) {
-            if(id.equals(product.getId())){
-                return product;
-            }
-        }
-        return null;
+        return productDao.getProductById(id);
+    }
+
+    public void add(Product product, Category category) {
+        productDao.add(product, category);
+    }
+
+    public void remove(Long id) {
+        productDao.remove(id);
     }
 
 }
