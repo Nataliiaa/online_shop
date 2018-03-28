@@ -12,6 +12,7 @@ import java.io.IOException;
 
 import static ua.danit.service.ProductService.PRODUCT_SERVICE;
 
+//TODO: try to concatanate these servlets into one
 @WebServlet(name = "cartActions", urlPatterns = "/cart/action/*")
 public class CartActionServlet extends HttpServlet {
 
