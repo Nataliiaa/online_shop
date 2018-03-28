@@ -79,7 +79,7 @@ public class ProductMockDaoImpl implements ProductDao {
         List<Product> products = this.products.get(category);
 
         if (products == null) {
-            ArrayList<Product> item = new ArrayList<>();
+            List<Product> item = new ArrayList<>();
             item.add(product);
             this.products.put(category, item);
         } else {

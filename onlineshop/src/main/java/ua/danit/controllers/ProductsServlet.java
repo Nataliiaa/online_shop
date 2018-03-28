@@ -1,9 +1,6 @@
 package ua.danit.controllers;
 
 import org.codehaus.jackson.map.ObjectMapper;
-import ua.danit.model.Actions;
-import ua.danit.model.Category;
-import ua.danit.model.Product;
 import ua.danit.service.ProductService;
 
 import javax.servlet.ServletException;

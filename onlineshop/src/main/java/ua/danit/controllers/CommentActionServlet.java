@@ -34,6 +34,7 @@ public class CommentActionServlet extends HttpServlet {
         }
     }
 
+    //TODO: need to remove
     private enum Actions {
         ADD("/add");
 

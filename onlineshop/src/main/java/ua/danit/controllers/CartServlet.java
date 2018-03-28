@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
 
 import static ua.danit.service.TemplateLoader.TEMPLATE_LOADER;
 
@@ -22,6 +21,7 @@ import static ua.danit.service.TemplateLoader.TEMPLATE_LOADER;
 public class CartServlet extends HttpServlet {
 
     public static Map<Product, Integer> cart = new HashMap<>();
+    //TODO: rename cartTotal
     public static int cartTotal = 0;
 
     private final TemplateLoader templateLoader = TEMPLATE_LOADER;
