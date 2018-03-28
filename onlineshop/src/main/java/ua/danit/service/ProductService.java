@@ -7,6 +7,7 @@ import ua.danit.model.Category;
 import ua.danit.model.Product;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ProductService {
 
@@ -36,6 +37,12 @@ public class ProductService {
 
     public void remove(Long id) {
         productDao.remove(id);
+    }
+
+    public List<Product> getProductsByTitle(String searchPhrase) {
+        return productDao.getAll().stream()
+                .filter(e -> e.getTitle().toLowerCase().startsWith(searchPhrase.toLowerCase()))
+                .collect(Collectors.toList());
     }
 
 }

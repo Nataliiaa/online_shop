@@ -18,7 +18,7 @@ import java.util.*;
 import static ua.danit.service.ProductService.PRODUCT_SERVICE;
 import static ua.danit.service.TemplateLoader.TEMPLATE_LOADER;
 
-@WebServlet(name = "mainServlet", urlPatterns = {"/"}, loadOnStartup = 1)
+@WebServlet(name = "mainServlet", urlPatterns = {"/", "/search"}, loadOnStartup = 1)
 public class MainPageServlet extends HttpServlet {
 
     private final ProductService productService = PRODUCT_SERVICE;
@@ -51,6 +51,23 @@ public class MainPageServlet extends HttpServlet {
                 .put("noProducts", products.isEmpty())
                 .put("currentCategory", currentCategory)
                 .put("isAdmin", isAdmin)
+                .build()
+        );
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String searchPhrase = req.getParameter("search");
+        List<Product> productsByTitle = productService.getProductsByTitle(searchPhrase);
+        PrintWriter out = resp.getWriter();
+
+        templateLoader.write("main.ftl", out, ImmutableMap.builder()
+                .put("cartSize", CartServlet.getItemsCount())
+                .put("categories", Category.values())
+                .put("products", productsByTitle)
+                .put("noProducts", productsByTitle.isEmpty())
+                .put("currentCategory", "Search results for: " + searchPhrase)
+                .put("isAdmin", false)
                 .build()
         );
     }
