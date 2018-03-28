@@ -20,7 +20,7 @@ public class ProductsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(productService.getAllProducts());
+        String json = mapper.writeValueAsString(productService.getAll());
         response.getWriter().write(json);
     }
 }

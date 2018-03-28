@@ -35,7 +35,7 @@ public class MainPageServlet extends HttpServlet {
         String currentCategory;
 
         if (category == null) {
-            products = productService.getAllProducts();
+            products = productService.getAll();
             currentCategory = "All Products";
         } else {
             Category selectedCategory = Category.getCategoryByTitle(category);
