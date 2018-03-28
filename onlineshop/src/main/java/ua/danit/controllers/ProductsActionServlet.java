@@ -1,6 +1,5 @@
 package ua.danit.controllers;
 
-import ua.danit.model.Actions;
 import ua.danit.model.Category;
 import ua.danit.model.Product;
 import ua.danit.service.ProductService;

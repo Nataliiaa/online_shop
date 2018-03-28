@@ -1,6 +1,5 @@
 package ua.danit.controllers;
 
-import ua.danit.model.Actions;
 import ua.danit.model.Product;
 import ua.danit.service.ProductService;
 
@@ -10,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.HashMap;
 
 import static ua.danit.service.ProductService.PRODUCT_SERVICE;
 

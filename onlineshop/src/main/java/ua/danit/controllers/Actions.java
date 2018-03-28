@@ -1,4 +1,4 @@
-package ua.danit.model;
+package ua.danit.controllers;
 
 public enum Actions {
     ADD("/add"), REMOVE("/remove"), REMOVEALL("/removeall");
