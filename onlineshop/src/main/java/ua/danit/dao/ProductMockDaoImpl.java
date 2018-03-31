@@ -66,7 +66,7 @@ public class ProductMockDaoImpl implements ProductDao {
     public List<Product> getByCategory(Category category) {
         if (category == null) {
             System.out.println("Empty category for getProducts");
-            return Collections.EMPTY_LIST;
+            return new ArrayList<>();
         }
 
         List<Product> productsByCategory = new ArrayList<>();
